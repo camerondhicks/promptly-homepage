@@ -79,6 +79,12 @@ const openingRows = [
   { company: "NASA", role: "Mission Systems Intern", meta: "Opened yesterday", tag: "Science" },
 ];
 
+const storySignals = [
+  { label: "First access to openings", icon: Zap },
+  { label: "Direct-from-source alerts", icon: Radar },
+  { label: "Apply before the crowd", icon: Bell },
+];
+
 function Logo() {
   return (
     <a href="#top" className="group flex items-center gap-3" aria-label="Promptly home">
@@ -389,31 +395,41 @@ function OurStory() {
         <div className="glass rounded-[2rem] p-6">
           <div className="rounded-[1.5rem] border border-white/10 bg-[#151824] p-5">
             <div className="mb-8 flex items-center justify-between">
-              <span className="section-kicker">Founder note</span>
+              <span className="section-kicker">Founders note</span>
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-violet-600">
                 <Zap className="h-6 w-6 fill-white text-white" />
               </span>
             </div>
             <div className="space-y-3">
-              {["Cognitive science coursework", "Clinical research", "Competitive applications"].map((item) => (
-                <div key={item} className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/6 p-4">
-                  <Check className="h-5 w-5 text-emerald-300" />
-                  <span className="text-sm font-bold text-slate-200">{item}</span>
-                </div>
-              ))}
+              {storySignals.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={item.label}
+                    className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/6 p-4 transition duration-300 hover:border-violet-300/30 hover:bg-white/10"
+                  >
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400/20 to-violet-500/25 text-sky-200 ring-1 ring-white/10">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <span className="text-sm font-bold text-slate-200">{item.label}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
 
         <div>
           <p className="section-kicker">Our Story</p>
-          <h2 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">About the Founder</h2>
+          <h2 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">About the Founders</h2>
           <div className="glass mt-8 rounded-[2rem] p-6 sm:p-8">
             <p className="text-lg font-medium leading-9 text-slate-200">
-              "As a student juggling rigorous cognitive science coursework and clinical research, I realized that
-              getting a foot in the door at top institutions was often just about timing. I built Promptly because I was
-              tired of missing the window for competitive opportunities. We are bridging the gap between talent and
-              timing."
+              <strong className="font-black text-white">Marley Stewart</strong>,{" "}
+              <strong className="font-black text-white">Cameron Hicks</strong>, and{" "}
+              <strong className="font-black text-white">Tremayne Russell</strong> started Promptly because we realized
+              that getting a foot in the door at top institutions was often just about timing. We built Promptly because
+              we were tired of missing the window for competitive opportunities. We are bridging the gap between talent
+              and timing.
             </p>
           </div>
         </div>

@@ -7,9 +7,12 @@ import {
   ChevronDown,
   Filter,
   Mail,
+  Phone,
   Radar,
   Search,
   Star,
+  User,
+  X,
   Zap,
 } from "lucide-react";
 
@@ -81,22 +84,32 @@ const openingRows = [
 
 const storySignals = [
   { label: "First access to openings", icon: Zap },
-  { label: "Direct-from-source alerts", icon: Radar },
+  { label: "Hear from postings first", icon: Radar },
   { label: "Apply before the crowd", icon: Bell },
 ];
 
+const waitlistInitialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+};
+
 function Logo() {
   return (
-    <a href="#top" className="group flex items-center gap-3" aria-label="Promptly home">
-      <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 via-violet-500 to-fuchsia-500 shadow-lg shadow-violet-700/35 transition duration-300 group-hover:-rotate-6 group-hover:scale-105">
-        <Zap className="h-5 w-5 fill-white text-white" />
+    <a href="#top" className="group flex items-center" aria-label="Promptly home">
+      <span className="relative block h-12 w-40 overflow-hidden rounded-2xl">
+        <img
+          src="/brand/promptly-logo-full.png"
+          alt="Promptly"
+          className="absolute left-1/2 top-1/2 h-32 w-48 -translate-x-1/2 -translate-y-1/2 object-contain transition duration-300 group-hover:scale-105"
+        />
       </span>
-      <span className="text-lg font-black tracking-tight text-white">Promptly</span>
     </a>
   );
 }
 
-function Navigation() {
+function Navigation({ onOpenWaitlist }) {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#11131b]/82 backdrop-blur-2xl">
       <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8">
@@ -112,36 +125,175 @@ function Navigation() {
             </a>
           ))}
         </div>
-        <a
-          href="#waitlist"
+        <button
+          type="button"
+          onClick={onOpenWaitlist}
           className="gradient-button rounded-2xl px-4 py-2.5 text-sm font-extrabold text-white transition duration-300 hover:-translate-y-0.5 sm:px-5"
         >
           Join the Waitlist
-        </a>
+        </button>
       </nav>
     </header>
   );
 }
 
-function WaitlistForm({ compact = false }) {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+function WaitlistModal({ isOpen, onClose }) {
+  const [form, setForm] = useState(waitlistInitialState);
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState("");
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    if (!email.trim()) return;
-    setSubmitted(true);
+  if (!isOpen) return null;
+
+  function updateField(field, value) {
+    setForm((current) => ({ ...current, [field]: value }));
   }
 
-  if (submitted) {
-    return (
-      <div className="glass flex items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-semibold text-emerald-100">
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-400/15 text-emerald-300">
-          <Check className="h-5 w-5" />
-        </span>
-        <span>You are on the early access list. We will send the next update soon.</span>
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setStatus("submitting");
+    setError("");
+
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || "The waitlist is not connected yet.");
+      }
+
+      setStatus("submitted");
+      setForm(waitlistInitialState);
+    } catch (submissionError) {
+      setStatus("error");
+      setError(submissionError.message);
+    }
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 px-4 py-6 backdrop-blur-xl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="waitlist-title"
+    >
+      <div className="relative w-full max-w-xl rounded-[2rem] border border-white/12 bg-[#101a27] p-6 shadow-2xl shadow-black/50 sm:p-8">
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-5 top-5 rounded-full p-2 text-slate-400 transition hover:bg-white/8 hover:text-white"
+          aria-label="Close waitlist form"
+        >
+          <X className="h-5 w-5" />
+        </button>
+
+        {status === "submitted" ? (
+          <div className="py-8">
+            <span className="mb-6 flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-sky-400 to-violet-600">
+              <Check className="h-8 w-8 text-white" />
+            </span>
+            <h2 id="waitlist-title" className="text-3xl font-black tracking-tight text-white">
+              You're on the list.
+            </h2>
+            <p className="mt-4 text-base font-medium leading-7 text-slate-300">
+              Thank you for taking part in the pre-launch program with Promptly. We'll reach out as early access opens.
+            </p>
+            <button
+              type="button"
+              onClick={onClose}
+              className="gradient-button mt-8 rounded-2xl px-6 py-3 text-sm font-black text-white transition hover:-translate-y-0.5"
+            >
+              Done
+            </button>
+          </div>
+        ) : (
+          <>
+            <h2 id="waitlist-title" className="text-3xl font-black tracking-tight text-white">
+              Join the waitlist
+            </h2>
+            <p className="mt-4 text-base font-medium leading-7 text-slate-400">
+              Get priority access when Promptly begins rolling out to students.
+            </p>
+
+            <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="relative block">
+                  <span className="sr-only">First name</span>
+                  <User className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-500" />
+                  <input
+                    required
+                    value={form.firstName}
+                    onChange={(event) => updateField("firstName", event.target.value)}
+                    placeholder="First name"
+                    className="w-full rounded-2xl border border-white/12 bg-white/10 py-4 pl-12 pr-4 text-white outline-none transition placeholder:text-slate-500 focus:border-sky-300/60"
+                  />
+                </label>
+                <label className="relative block">
+                  <span className="sr-only">Last name</span>
+                  <User className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-500" />
+                  <input
+                    required
+                    value={form.lastName}
+                    onChange={(event) => updateField("lastName", event.target.value)}
+                    placeholder="Last name"
+                    className="w-full rounded-2xl border border-white/12 bg-white/10 py-4 pl-12 pr-4 text-white outline-none transition placeholder:text-slate-500 focus:border-sky-300/60"
+                  />
+                </label>
+              </div>
+              <label className="relative block">
+                <span className="sr-only">Email address</span>
+                <Mail className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-500" />
+                <input
+                  required
+                  type="email"
+                  value={form.email}
+                  onChange={(event) => updateField("email", event.target.value)}
+                  placeholder="Email address"
+                  className="w-full rounded-2xl border border-white/12 bg-white/10 py-4 pl-12 pr-4 text-white outline-none transition placeholder:text-slate-500 focus:border-sky-300/60"
+                />
+              </label>
+              <label className="relative block">
+                <span className="sr-only">Phone number</span>
+                <Phone className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-500" />
+                <input
+                  required
+                  type="tel"
+                  value={form.phone}
+                  onChange={(event) => updateField("phone", event.target.value)}
+                  placeholder="Phone number"
+                  className="w-full rounded-2xl border border-white/12 bg-white/10 py-4 pl-12 pr-4 text-white outline-none transition placeholder:text-slate-500 focus:border-sky-300/60"
+                />
+              </label>
+
+              {error && (
+                <p className="rounded-2xl border border-amber-300/25 bg-amber-300/10 px-4 py-3 text-sm font-semibold text-amber-100">
+                  {error}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={status === "submitting"}
+                className="gradient-button flex w-full items-center justify-center gap-2 rounded-2xl px-5 py-4 text-sm font-black text-white transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                {status === "submitting" ? "Joining..." : "Join waitlist"}
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </form>
+          </>
+        )}
       </div>
-    );
+    </div>
+  );
+}
+
+function WaitlistCTA({ compact = false, onOpenWaitlist }) {
+  function handleSubmit(event) {
+    event.preventDefault();
+    onOpenWaitlist();
   }
 
   return (
@@ -160,8 +312,8 @@ function WaitlistForm({ compact = false }) {
         <input
           id={compact ? "footer-email" : "hero-email"}
           type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          readOnly
+          onFocus={onOpenWaitlist}
           placeholder="Enter your school email"
           className="w-full bg-transparent text-sm font-medium text-white outline-none placeholder:text-slate-500 sm:text-base"
         />
@@ -296,7 +448,7 @@ function DashboardMockup() {
   );
 }
 
-function Hero() {
+function Hero({ onOpenWaitlist }) {
   return (
     <section id="top" className="relative overflow-hidden px-5 pb-20 pt-32 sm:px-8 lg:min-h-screen lg:pb-28 lg:pt-36">
       <div className="mx-auto max-w-7xl">
@@ -309,7 +461,7 @@ function Hero() {
             the second an opportunity goes live.
           </p>
           <div className="mt-8">
-            <WaitlistForm />
+            <WaitlistCTA onOpenWaitlist={onOpenWaitlist} />
           </div>
         </div>
         <div className="relative z-10 mt-12 lg:mt-0 lg:hidden">
@@ -396,9 +548,15 @@ function OurStory() {
           <div className="rounded-[1.5rem] border border-white/10 bg-[#151824] p-5">
             <div className="mb-8 flex items-center justify-between">
               <span className="section-kicker">Founders note</span>
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-violet-600">
-                <Zap className="h-6 w-6 fill-white text-white" />
+              <span className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl bg-white">
+                <img src="/brand/promptly-logo-mark.png" alt="" className="h-full w-full object-cover" />
               </span>
+            </div>
+            <div className="mb-4 rounded-2xl border border-violet-300/20 bg-gradient-to-br from-sky-400/12 to-violet-600/18 p-5">
+              <p className="text-4xl font-black tracking-tight text-white">70-80%</p>
+              <p className="mt-2 text-sm font-bold leading-6 text-slate-300">
+                of corporate employers use rolling, first-come application review for many early-career roles.
+              </p>
             </div>
             <div className="space-y-3">
               {storySignals.map((item) => {
@@ -421,15 +579,16 @@ function OurStory() {
 
         <div>
           <p className="section-kicker">Our Story</p>
-          <h2 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">About the Founders</h2>
+          <h2 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">Timing Is the Difference</h2>
           <div className="glass mt-8 rounded-[2rem] p-6 sm:p-8">
             <p className="text-lg font-medium leading-9 text-slate-200">
-              <strong className="font-black text-white">Marley Stewart</strong>,{" "}
-              <strong className="font-black text-white">Cameron Hicks</strong>, and{" "}
-              <strong className="font-black text-white">Tremayne Russell</strong> started Promptly because we realized
-              that getting a foot in the door at top institutions was often just about timing. We built Promptly because
-              we were tired of missing the window for competitive opportunities. We are bridging the gap between talent
-              and timing.
+              Promptly was founded in response to the immense pressure of securing competitive roles at top-tier
+              institutions. The platform was built upon a frustrating truth: getting a foot in the door is not just
+              about qualifications; a large part is almost entirely about timing. Highly qualified candidates often miss
+              out on career-defining internships simply because they discover the postings a few days too late. Created
+              to prevent the window for these opportunities from closing before applicants even know they are open,
+              Promptly is now leveling the playing field. Today, the platform bridges the critical gap between
+              exceptional talent and perfect timing.
             </p>
           </div>
         </div>
@@ -486,7 +645,7 @@ function FAQ() {
   );
 }
 
-function Footer() {
+function Footer({ onOpenWaitlist }) {
   return (
     <footer className="px-5 py-12 sm:px-8">
       <div className="mx-auto max-w-7xl">
@@ -510,17 +669,11 @@ function Footer() {
                 <a className="transition hover:text-white" href="mailto:hello@joinpromptly.com">
                   Contact
                 </a>
-                <a className="transition hover:text-white" href="#privacy">
-                  Privacy
-                </a>
-                <a className="transition hover:text-white" href="#terms">
-                  Terms
-                </a>
               </div>
             </div>
             <div>
               <p className="mb-3 text-sm font-black uppercase tracking-widest text-slate-400">Final call</p>
-              <WaitlistForm compact />
+              <WaitlistCTA compact onOpenWaitlist={onOpenWaitlist} />
             </div>
           </div>
           <div className="mt-8 border-t border-white/10 pt-5 text-sm font-medium text-slate-500">
@@ -533,15 +686,18 @@ function Footer() {
 }
 
 function App() {
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+
   return (
     <main className="app-shell min-h-screen">
-      <Navigation />
-      <Hero />
+      <Navigation onOpenWaitlist={() => setIsWaitlistOpen(true)} />
+      <Hero onOpenWaitlist={() => setIsWaitlistOpen(true)} />
       <Features />
       <HowItWorks />
       <OurStory />
       <FAQ />
-      <Footer />
+      <Footer onOpenWaitlist={() => setIsWaitlistOpen(true)} />
+      <WaitlistModal isOpen={isWaitlistOpen} onClose={() => setIsWaitlistOpen(false)} />
     </main>
   );
 }

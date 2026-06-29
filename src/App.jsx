@@ -18,24 +18,24 @@ import {
 
 const navLinks = [
   { label: "Features", href: "#features" },
-  { label: "How it Works", href: "#how-it-works" },
+  { label: "How It Will Work", href: "#how-it-works" },
   { label: "Our Story", href: "#our-story" },
 ];
 
 const features = [
   {
     title: "Live Openings Feed",
-    body: "Filter instantly by Technology, Healthcare, Science, and Policy. Track exact deadlines and opening times.",
+    body: "Students will filter instantly by Technology, Healthcare, Science, and Policy while tracking exact deadlines and opening times.",
     icon: Radar,
   },
   {
     title: "Recruiting Cycles Timeline",
-    body: "Visualize the entire year. Know exactly when companies like NASA, Mayo Clinic, and Spotify typically open their applications.",
+    body: "Students will visualize the entire year and know when companies like NASA, Mayo Clinic, and Spotify typically open their applications.",
     icon: CalendarDays,
   },
   {
     title: "Multi-Channel Alerts",
-    body: "Receive instant push notifications directly to your lock screen, alongside daily email digests and SMS alerts for time-sensitive roles.",
+    body: "Students will receive instant push notifications directly to their lock screen, alongside daily email digests and SMS alerts for time-sensitive roles.",
     icon: Bell,
   },
 ];
@@ -43,36 +43,36 @@ const features = [
 const steps = [
   {
     title: "Set Your Filters",
-    body: "Select your major, graduation year, and target industries.",
+    body: "You will select your major, graduation year, and target industries.",
     icon: Filter,
   },
   {
     title: "Save Your Firms",
-    body: "Star the companies you care about most to keep them close.",
+    body: "You will star the companies you care about most to keep them close.",
     icon: Star,
   },
   {
     title: "Get Notified",
-    body: "Wait for the ping. Apply before the competition even knows the role exists.",
+    body: "Promptly will ping you so you can apply before the competition even knows the role exists.",
     icon: Zap,
   },
 ];
 
 const faqItems = [
   {
-    question: "How fast are the notifications?",
+    question: "How fast will the notifications be?",
     answer:
-      "Promptly is built around instant alerts. When a tracked opportunity is published, the product is designed to send students a push notification immediately so they can apply while the window is still fresh.",
+      "Promptly will be built around instant alerts. When a tracked opportunity is published, the product will be designed to notify students immediately so they can apply while the window is still fresh.",
   },
   {
-    question: "What industries do you track?",
+    question: "What industries will Promptly track?",
     answer:
-      "Promptly tracks opportunities across Technology, Healthcare, Science, Policy, and adjacent student-focused fields like Finance, Consulting, Education, Design, Marketing, and Media.",
+      "Promptly will track opportunities across Technology, Healthcare, Science, Policy, and adjacent student-focused fields like Finance, Consulting, Education, Design, Marketing, and Media.",
   },
   {
-    question: "Is there a mobile app?",
+    question: "Will there be a mobile app?",
     answer:
-      "Yes. Promptly is planned as both a web app and phone app, so students can manage their search from a dashboard and still receive time-sensitive alerts directly on their lock screen.",
+      "Yes. Promptly will launch as both a web app and phone app, so students will be able to manage their search from a dashboard and receive time-sensitive alerts directly on their lock screen.",
   },
   {
     question: "Can I follow specific companies?",
@@ -82,15 +82,15 @@ const faqItems = [
   {
     question: "Will I get too many alerts?",
     answer:
-      "Promptly is designed to keep alerts focused. You choose your industries, interests, and targets, then receive instant notifications for time-sensitive matches alongside calmer digest-style updates.",
+      "Promptly will be designed to keep alerts focused. Students will choose their industries, interests, and targets, then receive instant notifications for time-sensitive matches alongside calmer digest-style updates.",
   },
   {
-    question: "Is Promptly only for internships?",
+    question: "How will Promptly find openings faster than job boards?",
     answer:
-      "The first focus is competitive internships and early-career roles, but the same timing problem exists across fellowships, research programs, pre-professional opportunities, and student pipelines.",
+      "Promptly will monitor the career pages of companies students follow, not just job boards, so they can hear about roles closer to the moment they are released.",
   },
   {
-    question: "What happens after I join the waitlist?",
+    question: "What will happen after I join the waitlist?",
     answer:
       "You will be part of the Promptly pre-launch group. We will use your submission to plan early access, share product updates, and invite students in as the platform opens.",
   },
@@ -113,6 +113,27 @@ const waitlistInitialState = {
   lastName: "",
   email: "",
   phone: "",
+};
+
+const legalContent = {
+  privacy: {
+    eyebrow: "Privacy",
+    title: "Privacy at Promptly",
+    body: [
+      "Promptly will collect waitlist information, including names, email addresses, and phone numbers, so we can manage early access, send product updates, and contact students about the pre-launch program.",
+      "We will not sell your contact information or share it with outside advertisers or unrelated third parties. Waitlist information will stay private inside Promptly's waitlist workflow and will only be used for launch communications, early access, and direct support.",
+      "You will be able to unsubscribe from Promptly updates at any time by contacting us.",
+    ],
+  },
+  terms: {
+    eyebrow: "Terms",
+    title: "Pre-Launch Terms",
+    body: [
+      "Promptly is currently pre-launch, so joining the waitlist does not guarantee immediate access or availability on a specific date.",
+      "Early access invitations, features, and supported opportunity sources may change as the product is developed.",
+      "By joining the waitlist, you agree that Promptly may use your submitted contact information to communicate with you about early access, product updates, and launch-related announcements.",
+    ],
+  },
 };
 
 function Logo() {
@@ -157,7 +178,52 @@ function Navigation({ onOpenWaitlist }) {
   );
 }
 
-function WaitlistModal({ isOpen, onClose }) {
+function LegalModal({ view, onClose }) {
+  if (!view) return null;
+
+  const content = legalContent[view];
+
+  return (
+    <div
+      className="fixed inset-0 z-[110] flex items-center justify-center bg-black/70 px-4 py-6 backdrop-blur-xl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="legal-title"
+    >
+      <div className="relative w-full max-w-2xl rounded-[2rem] border border-white/12 bg-[#101a27] p-6 shadow-2xl shadow-black/50 sm:p-8">
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-5 top-5 rounded-full p-2 text-slate-400 transition hover:bg-white/8 hover:text-white"
+          aria-label={`Close ${content.eyebrow}`}
+        >
+          <X className="h-5 w-5" />
+        </button>
+
+        <p className="section-kicker">{content.eyebrow}</p>
+        <h2 id="legal-title" className="mt-4 text-3xl font-black tracking-tight text-white">
+          {content.title}
+        </h2>
+        <div className="mt-6 space-y-4">
+          {content.body.map((paragraph) => (
+            <p key={paragraph} className="text-sm font-medium leading-7 text-slate-300 sm:text-base">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="gradient-button mt-8 rounded-2xl px-6 py-3 text-sm font-black text-white transition hover:-translate-y-0.5"
+        >
+          Done
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function WaitlistModal({ isOpen, onClose, onOpenLegal }) {
   const [form, setForm] = useState(waitlistInitialState);
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
@@ -302,6 +368,25 @@ function WaitlistModal({ isOpen, onClose }) {
                 {status === "submitting" ? "Joining..." : "Join waitlist"}
                 <ArrowRight className="h-4 w-4" />
               </button>
+              <p className="text-center text-xs font-medium leading-5 text-slate-500">
+                We will use your information for early access only. Read our{" "}
+                <button
+                  type="button"
+                  onClick={() => onOpenLegal("privacy")}
+                  className="font-bold text-slate-300 transition hover:text-white"
+                >
+                  Privacy
+                </button>{" "}
+                and{" "}
+                <button
+                  type="button"
+                  onClick={() => onOpenLegal("terms")}
+                  className="font-bold text-slate-300 transition hover:text-white"
+                >
+                  Terms
+                </button>
+                .
+              </p>
             </form>
           </>
         )}
@@ -317,35 +402,38 @@ function WaitlistCTA({ compact = false, onOpenWaitlist }) {
   }
 
   return (
-    <form
-      id={compact ? undefined : "waitlist"}
-      onSubmit={handleSubmit}
-      className={`glass flex w-full flex-col gap-3 rounded-3xl p-2 sm:flex-row ${
-        compact ? "max-w-xl" : "max-w-2xl"
-      }`}
-    >
-      <label className="sr-only" htmlFor={compact ? "footer-email" : "hero-email"}>
-        Email address
-      </label>
-      <div className="flex min-w-0 flex-1 items-center gap-3 rounded-2xl bg-black/20 px-4 py-3 ring-1 ring-white/8 transition focus-within:ring-2 focus-within:ring-blue-400/70">
-        <Mail className="h-5 w-5 shrink-0 text-slate-400" />
-        <input
-          id={compact ? "footer-email" : "hero-email"}
-          type="email"
-          readOnly
-          onFocus={onOpenWaitlist}
-          placeholder="Enter your school email"
-          className="w-full bg-transparent text-sm font-medium text-white outline-none placeholder:text-slate-500 sm:text-base"
-        />
-      </div>
-      <button
-        type="submit"
-        className="gradient-button inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-black text-white transition duration-300 hover:-translate-y-0.5 sm:text-base"
+    <div className={compact ? "max-w-xl" : "max-w-2xl"}>
+      <form
+        id={compact ? undefined : "waitlist"}
+        onSubmit={handleSubmit}
+        className="glass flex w-full flex-col gap-3 rounded-3xl p-2 sm:flex-row"
       >
-        Get Early Access
-        <ArrowRight className="h-4 w-4" />
-      </button>
-    </form>
+        <label className="sr-only" htmlFor={compact ? "footer-email" : "hero-email"}>
+          Email address
+        </label>
+        <div className="flex min-w-0 flex-1 items-center gap-3 rounded-2xl bg-black/20 px-4 py-3 ring-1 ring-white/8 transition focus-within:ring-2 focus-within:ring-blue-400/70">
+          <Mail className="h-5 w-5 shrink-0 text-slate-400" />
+          <input
+            id={compact ? "footer-email" : "hero-email"}
+            type="email"
+            readOnly
+            onFocus={onOpenWaitlist}
+            placeholder="Enter your school email"
+            className="w-full bg-transparent text-sm font-medium text-white outline-none placeholder:text-slate-500 sm:text-base"
+          />
+        </div>
+        <button
+          type="submit"
+          className="gradient-button inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-black text-white transition duration-300 hover:-translate-y-0.5 sm:text-base"
+        >
+          Get Early Access
+          <ArrowRight className="h-4 w-4" />
+        </button>
+      </form>
+      <p className="mt-3 text-center text-xs font-bold text-slate-500 sm:text-left">
+        Free to join • No spam • Unsubscribe anytime
+      </p>
+    </div>
   );
 }
 
@@ -387,7 +475,7 @@ function DashboardMockup() {
                 Google Associate Product Manager just opened 18 min ago.
               </h3>
               <p className="mt-3 text-sm font-semibold text-slate-300">
-                Deadline Nov 4, 2025. Summer 2026 application.
+                Deadline listed by company. Upcoming internship cycle.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <span className="gradient-button inline-flex rounded-2xl px-5 py-3 text-sm font-black text-white">
@@ -405,7 +493,7 @@ function DashboardMockup() {
               </span>
               <h3 className="mt-5 text-xl font-black text-white">Always watching</h3>
               <p className="mt-2 text-sm font-medium leading-6 text-slate-400">
-                Only live, relevant openings make it here.
+                Only live, relevant openings will make it here.
               </p>
             </div>
           </div>
@@ -459,7 +547,7 @@ function DashboardMockup() {
             </div>
             <p className="text-xs font-black uppercase tracking-wide text-white/75">Promptly Alert</p>
             <h4 className="mt-2 text-lg font-black leading-tight text-white">Google APM just opened.</h4>
-            <p className="mt-2 text-xs font-semibold text-white/75">Tap to view deadline and apply.</p>
+            <p className="mt-2 text-xs font-semibold text-white/75">Deadline and application link ready.</p>
           </div>
           <div className="mt-4 space-y-2">
             <div className="h-3 rounded-full bg-white/12" />
@@ -480,8 +568,12 @@ function Hero({ onOpenWaitlist }) {
             Never Miss the Window. <span className="gradient-text">Be the First to Apply.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-lg font-medium leading-8 text-slate-300 sm:text-xl">
-            Stop finding out about top-tier internships days after they open. Promptly sends you instant notifications
-            the second an opportunity goes live.
+            Stop finding out about top-tier internships days after they open. Promptly will send you instant
+            notifications the second an opportunity goes live.
+          </p>
+          <p className="mt-4 max-w-2xl text-sm font-semibold leading-7 text-slate-400 sm:text-base">
+            Promptly will monitor the career pages of companies you follow, not just job boards, so you will hear about
+            roles closer to the moment they are released.
           </p>
           <div className="mt-8">
             <WaitlistCTA onOpenWaitlist={onOpenWaitlist} />
@@ -518,7 +610,7 @@ function Features() {
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
           <p className="section-kicker">Features</p>
-          <h2 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">What it Does</h2>
+          <h2 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">What It Will Do</h2>
         </div>
         <div className="mt-12 grid gap-4 md:grid-cols-3">
           {features.map((feature) => (
@@ -535,7 +627,7 @@ function HowItWorks() {
     <section id="how-it-works" className="border-y border-white/10 bg-black/14 px-5 py-24 sm:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="section-kicker">How it Works</p>
+          <p className="section-kicker">How It Will Work</p>
           <h2 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">Step-by-Step</h2>
         </div>
         <div className="mt-12 grid gap-4 lg:grid-cols-3">
@@ -576,9 +668,10 @@ function OurStory() {
               </span>
             </div>
             <div className="mb-4 rounded-2xl border border-violet-300/20 bg-gradient-to-br from-sky-400/12 to-violet-600/18 p-5">
-              <p className="text-4xl font-black tracking-tight text-white">70-80%</p>
+              <p className="text-2xl font-black tracking-tight text-white">Rolling review moves fast.</p>
               <p className="mt-2 text-sm font-bold leading-6 text-slate-300">
-                of corporate employers use rolling, first-come application review for many early-career roles.
+                Many competitive roles review candidates as applications arrive, so finding the posting early can
+                create a real advantage.
               </p>
             </div>
             <div className="space-y-3">
@@ -609,8 +702,8 @@ function OurStory() {
               institutions. The platform was built upon a frustrating truth: getting a foot in the door is not just
               about qualifications; a large part is almost entirely about timing. Highly qualified candidates often miss
               out on career-defining internships simply because they discover the postings a few days too late. Created
-              to prevent the window for these opportunities from closing before applicants even know they are open,
-              Promptly is now leveling the playing field. Today, the platform bridges the critical gap between
+              to prevent the window for these opportunities from closing before applicants even know they are open, the
+              platform will help level the playing field. Promptly will bridge the critical gap between
               exceptional talent and perfect timing.
             </p>
           </div>
@@ -668,7 +761,7 @@ function FAQ() {
   );
 }
 
-function Footer({ onOpenWaitlist }) {
+function Footer({ onOpenWaitlist, onOpenLegal }) {
   return (
     <footer className="px-5 py-12 sm:px-8">
       <div className="mx-auto max-w-7xl">
@@ -677,14 +770,14 @@ function Footer({ onOpenWaitlist }) {
             <div>
               <Logo />
               <p className="mt-4 max-w-xl text-sm font-medium leading-7 text-slate-300">
-                Join the waitlist to get instant internship and job alerts the second they go live.
+                Join the waitlist to get instant internship and job alerts when Promptly launches.
               </p>
               <div className="mt-5 flex flex-wrap gap-4 text-sm font-bold text-slate-400">
                 <a className="transition hover:text-white" href="#features">
                   Features
                 </a>
                 <a className="transition hover:text-white" href="#how-it-works">
-                  How it Works
+                  How It Will Work
                 </a>
                 <a className="transition hover:text-white" href="#our-story">
                   Our Story
@@ -692,6 +785,12 @@ function Footer({ onOpenWaitlist }) {
                 <a className="transition hover:text-white" href="mailto:hello@joinpromptly.com">
                   Contact
                 </a>
+                <button className="transition hover:text-white" type="button" onClick={() => onOpenLegal("privacy")}>
+                  Privacy
+                </button>
+                <button className="transition hover:text-white" type="button" onClick={() => onOpenLegal("terms")}>
+                  Terms
+                </button>
               </div>
             </div>
             <div>
@@ -710,6 +809,7 @@ function Footer({ onOpenWaitlist }) {
 
 function App() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+  const [legalView, setLegalView] = useState(null);
 
   return (
     <main className="app-shell min-h-screen">
@@ -719,8 +819,13 @@ function App() {
       <HowItWorks />
       <OurStory />
       <FAQ />
-      <Footer onOpenWaitlist={() => setIsWaitlistOpen(true)} />
-      <WaitlistModal isOpen={isWaitlistOpen} onClose={() => setIsWaitlistOpen(false)} />
+      <Footer onOpenWaitlist={() => setIsWaitlistOpen(true)} onOpenLegal={setLegalView} />
+      <WaitlistModal
+        isOpen={isWaitlistOpen}
+        onClose={() => setIsWaitlistOpen(false)}
+        onOpenLegal={setLegalView}
+      />
+      <LegalModal view={legalView} onClose={() => setLegalView(null)} />
     </main>
   );
 }

@@ -74,6 +74,26 @@ const faqItems = [
     answer:
       "Yes. Promptly is planned as both a web app and phone app, so students can manage their search from a dashboard and still receive time-sensitive alerts directly on their lock screen.",
   },
+  {
+    question: "Can I follow specific companies?",
+    answer:
+      "Yes. Students will be able to save the firms, hospitals, labs, agencies, and organizations they care about most so those openings stay prioritized.",
+  },
+  {
+    question: "Will I get too many alerts?",
+    answer:
+      "Promptly is designed to keep alerts focused. You choose your industries, interests, and targets, then receive instant notifications for time-sensitive matches alongside calmer digest-style updates.",
+  },
+  {
+    question: "Is Promptly only for internships?",
+    answer:
+      "The first focus is competitive internships and early-career roles, but the same timing problem exists across fellowships, research programs, pre-professional opportunities, and student pipelines.",
+  },
+  {
+    question: "What happens after I join the waitlist?",
+    answer:
+      "You will be part of the Promptly pre-launch group. We will use your submission to plan early access, share product updates, and invite students in as the platform opens.",
+  },
 ];
 
 const openingRows = [
@@ -331,7 +351,10 @@ function WaitlistCTA({ compact = false, onOpenWaitlist }) {
 
 function DashboardMockup() {
   return (
-    <div className="product-stage mx-auto w-full max-w-5xl lg:absolute lg:-right-[28rem] lg:top-28 lg:w-[52rem] xl:-right-[24rem]">
+    <div
+      className="product-stage pointer-events-none mx-auto w-full max-w-5xl select-none lg:absolute lg:-right-[28rem] lg:top-28 lg:w-[52rem] xl:-right-[24rem]"
+      aria-hidden="true"
+    >
       <div className="dashboard-perspective glass rounded-[2rem] p-3 shadow-2xl shadow-violet-950/40">
         <div className="rounded-[1.5rem] border border-white/10 bg-[#141722] p-4 sm:p-5">
           <div className="mb-5 flex items-center justify-between">
@@ -367,12 +390,12 @@ function DashboardMockup() {
                 Deadline Nov 4, 2025. Summer 2026 application.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <button className="gradient-button rounded-2xl px-5 py-3 text-sm font-black text-white transition hover:-translate-y-0.5">
+                <span className="gradient-button inline-flex rounded-2xl px-5 py-3 text-sm font-black text-white">
                   Apply Now
-                </button>
-                <button className="rounded-2xl border border-white/12 bg-white/10 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/16">
+                </span>
+                <span className="inline-flex rounded-2xl border border-white/12 bg-white/10 px-5 py-3 text-sm font-bold text-white">
                   Save
-                </button>
+                </span>
               </div>
             </div>
 
@@ -402,7 +425,7 @@ function DashboardMockup() {
             {openingRows.map((opening) => (
               <div
                 key={opening.company}
-                className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/7 p-3 transition hover:bg-white/11"
+                className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/7 p-3"
               >
                 <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-violet-600 text-xs font-black text-white">
                   {opening.company === "Google" ? "GO" : opening.company === "Mayo Clinic" ? "Mayo" : "NASA"}

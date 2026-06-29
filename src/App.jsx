@@ -97,9 +97,27 @@ const faqItems = [
 ];
 
 const openingRows = [
-  { company: "Google", role: "Associate Product Manager", meta: "Opened 18 min ago", tag: "Technology" },
-  { company: "Mayo Clinic", role: "Clinical Research Intern", meta: "Opened 1 hr ago", tag: "Healthcare" },
-  { company: "NASA", role: "Mission Systems Intern", meta: "Opened yesterday", tag: "Science" },
+  {
+    company: "Google",
+    role: "Associate Product Manager",
+    meta: "Opened 18 min ago",
+    tag: "Technology",
+    logo: "https://www.google.com/s2/favicons?domain=google.com&sz=128",
+  },
+  {
+    company: "BlackRock",
+    role: "Summer Analyst Program",
+    meta: "Opened 1 hr ago",
+    tag: "Finance",
+    logo: "https://www.google.com/s2/favicons?domain=blackrock.com&sz=128",
+  },
+  {
+    company: "Amazon",
+    role: "Operations Finance Intern",
+    meta: "Opened recently",
+    tag: "Finance",
+    logo: "https://www.google.com/s2/favicons?domain=amazon.com&sz=128",
+  },
 ];
 
 const storySignals = [
@@ -512,8 +530,14 @@ function DashboardMockup() {
                 key={opening.company}
                 className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/7 p-3"
               >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-violet-600 text-xs font-black text-white">
-                  {opening.company === "Google" ? "GO" : opening.company === "Mayo Clinic" ? "Mayo" : "NASA"}
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-2 shadow-lg shadow-black/20 ring-1 ring-white/10">
+                  <img
+                    src={opening.logo}
+                    alt=""
+                    className="h-full w-full object-contain"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                  />
                 </span>
                 <div className="min-w-0">
                   <p className="text-[0.68rem] font-black text-violet-200">{opening.tag}</p>

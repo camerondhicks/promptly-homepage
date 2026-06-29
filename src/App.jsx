@@ -474,9 +474,6 @@ function DashboardMockup() {
               <h3 className="max-w-xl text-3xl font-black leading-tight text-white sm:text-4xl">
                 Google Associate Product Manager just opened 18 min ago.
               </h3>
-              <p className="mt-3 text-sm font-semibold text-slate-300">
-                Deadline listed by company. Upcoming internship cycle.
-              </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <span className="gradient-button inline-flex rounded-2xl px-5 py-3 text-sm font-black text-white">
                   Apply Now
@@ -571,10 +568,6 @@ function Hero({ onOpenWaitlist }) {
             Stop finding out about top-tier internships days after they open. Promptly will send you instant
             notifications the second an opportunity goes live.
           </p>
-          <p className="mt-4 max-w-2xl text-sm font-semibold leading-7 text-slate-400 sm:text-base">
-            Promptly will monitor the career pages of companies you follow, not just job boards, so you will hear about
-            roles closer to the moment they are released.
-          </p>
           <div className="mt-8">
             <WaitlistCTA onOpenWaitlist={onOpenWaitlist} />
           </div>
@@ -616,6 +609,18 @@ function Features() {
           {features.map((feature) => (
             <FeatureCard key={feature.title} feature={feature} />
           ))}
+        </div>
+        <div className="glass mt-5 flex flex-col gap-4 rounded-3xl p-5 sm:flex-row sm:items-center">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400/20 to-violet-500/25 text-sky-200 ring-1 ring-white/10">
+            <Search className="h-6 w-6" />
+          </span>
+          <div>
+            <p className="text-sm font-black uppercase tracking-[0.14em] text-violet-300">Why it will be faster</p>
+            <p className="mt-2 text-sm font-medium leading-7 text-slate-300 sm:text-base">
+              Promptly will monitor the career pages of companies you follow, not just job boards, so you will hear
+              about roles closer to the moment they are released.
+            </p>
+          </div>
         </div>
       </div>
     </section>

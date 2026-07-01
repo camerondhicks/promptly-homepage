@@ -19,7 +19,7 @@ import {
 const navLinks = [
   { label: "How It Works", href: "#how-it-works" },
   { label: "Features", href: "#features" },
-  { label: "Our Story", href: "#our-story" },
+  { label: "Founders Note", href: "#our-story" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -769,7 +769,7 @@ function OurStory() {
         <div className="glass rounded-[2rem] p-6">
           <div className="rounded-[1.5rem] border border-white/10 bg-[#151824] p-5">
             <div className="mb-8 flex items-center justify-between">
-              <span className="section-kicker">Founders note</span>
+              <span className="section-kicker">Why timing matters</span>
               <span className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl bg-white">
                 <img src="/brand/promptly-logo-mark.png" alt="" className="h-full w-full object-cover" />
               </span>
@@ -801,7 +801,7 @@ function OurStory() {
         </div>
 
         <div>
-          <p className="section-kicker">Our Story</p>
+          <p className="section-kicker">Founders Note</p>
           <h2 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">Timing Is the Difference</h2>
           <div className="glass mt-8 rounded-[2rem] p-6 sm:p-8">
             <p className="text-lg font-medium leading-9 text-slate-200">
@@ -887,7 +887,7 @@ function Footer({ onOpenWaitlist, onOpenLegal, onOpenContact }) {
                   How It Works
                 </a>
                 <a className="transition hover:text-white" href="#our-story">
-                  Our Story
+                  Founders Note
                 </a>
                 <button className="transition hover:text-white" type="button" onClick={onOpenContact}>
                   Contact

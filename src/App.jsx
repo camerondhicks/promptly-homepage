@@ -20,6 +20,7 @@ const navLinks = [
   { label: "How It Works", href: "#how-it-works" },
   { label: "Features", href: "#features" },
   { label: "Our Story", href: "#our-story" },
+  { label: "FAQ", href: "#faq" },
 ];
 
 const features = [
@@ -47,8 +48,8 @@ const steps = [
     icon: Filter,
   },
   {
-    title: "Save Your Firms",
-    body: "You will star the companies you care about most to keep them close.",
+    title: "Browse Every Listing",
+    body: "You will be able to see every internship listing, then star the opportunities that are highest priority.",
     icon: Star,
   },
   {
@@ -229,6 +230,67 @@ function LegalModal({ view, onClose }) {
             </p>
           ))}
         </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="gradient-button mt-8 rounded-2xl px-6 py-3 text-sm font-black text-white transition hover:-translate-y-0.5"
+        >
+          Done
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ContactModal({ isOpen, onClose }) {
+  if (!isOpen) return null;
+
+  const contactLinks = [
+    { label: "Instagram", value: "@joinpromptly", href: "https://www.instagram.com/joinpromptly" },
+    { label: "Email", value: "help.promptly@gmail.com", href: "mailto:help.promptly@gmail.com" },
+    { label: "TikTok", value: "@promplty25", href: "https://www.tiktok.com/@promplty25" },
+  ];
+
+  return (
+    <div
+      className="fixed inset-0 z-[110] flex items-center justify-center bg-black/70 px-4 py-6 backdrop-blur-xl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="contact-title"
+    >
+      <div className="relative w-full max-w-xl rounded-[2rem] border border-white/12 bg-[#101a27] p-6 shadow-2xl shadow-black/50 sm:p-8">
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-5 top-5 rounded-full p-2 text-slate-400 transition hover:bg-white/8 hover:text-white"
+          aria-label="Close contact information"
+        >
+          <X className="h-5 w-5" />
+        </button>
+
+        <p className="section-kicker">Contact</p>
+        <h2 id="contact-title" className="mt-4 text-3xl font-black tracking-tight text-white">
+          Reach Promptly
+        </h2>
+        <p className="mt-4 text-base font-medium leading-7 text-slate-300">
+          Follow along or reach out to the team through any of these channels.
+        </p>
+
+        <div className="mt-6 space-y-3">
+          {contactLinks.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              target={item.href.startsWith("http") ? "_blank" : undefined}
+              rel={item.href.startsWith("http") ? "noreferrer" : undefined}
+              className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/7 px-4 py-4 transition hover:border-violet-300/30 hover:bg-white/10"
+            >
+              <span className="text-sm font-black uppercase tracking-[0.14em] text-violet-300">{item.label}</span>
+              <span className="text-right text-sm font-bold text-white sm:text-base">{item.value}</span>
+            </a>
+          ))}
+        </div>
+
         <button
           type="button"
           onClick={onClose}
@@ -449,7 +511,7 @@ function WaitlistCTA({ compact = false, onOpenWaitlist }) {
         </button>
       </form>
       <p className="mt-3 text-center text-xs font-bold text-slate-500 sm:text-left">
-        Free to join • No spam • Early access updates only
+        Free to join • No spam • Priority access updates only
       </p>
     </div>
   );
@@ -466,7 +528,7 @@ function DashboardMockup() {
           <div className="mb-5 flex items-center justify-between">
             <div>
               <p className="text-[0.68rem] font-black uppercase tracking-[0.2em] text-violet-300">Mission control</p>
-              <h2 className="mt-1 text-2xl font-black tracking-tight text-white sm:text-4xl">Hello, user</h2>
+              <h2 className="mt-1 text-2xl font-black tracking-tight text-white sm:text-4xl">Hello, User</h2>
             </div>
             <div className="hidden items-center gap-2 sm:flex">
               <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/8 text-slate-300 ring-1 ring-white/10">
@@ -675,7 +737,7 @@ function HowItWorks() {
             return (
               <article
                 key={step.title}
-                className="glass relative overflow-hidden rounded-3xl p-6 transition duration-300 hover:-translate-y-1 hover:border-violet-300/30 hover:bg-white/12"
+                className="glass relative rounded-3xl p-6 transition duration-300 hover:-translate-y-1 hover:border-violet-300/30 hover:bg-white/12"
               >
                 {index < steps.length - 1 && (
                   <div className="absolute -right-7 top-1/2 z-10 hidden h-px w-10 bg-gradient-to-r from-violet-300 to-transparent lg:block" />
@@ -806,7 +868,7 @@ function FAQ() {
   );
 }
 
-function Footer({ onOpenWaitlist, onOpenLegal }) {
+function Footer({ onOpenWaitlist, onOpenLegal, onOpenContact }) {
   return (
     <footer className="px-5 py-12 sm:px-8">
       <div className="mx-auto max-w-7xl">
@@ -827,9 +889,9 @@ function Footer({ onOpenWaitlist, onOpenLegal }) {
                 <a className="transition hover:text-white" href="#our-story">
                   Our Story
                 </a>
-                <a className="transition hover:text-white" href="mailto:hello@joinpromptly.com">
+                <button className="transition hover:text-white" type="button" onClick={onOpenContact}>
                   Contact
-                </a>
+                </button>
                 <button className="transition hover:text-white" type="button" onClick={() => onOpenLegal("privacy")}>
                   Privacy
                 </button>
@@ -855,6 +917,7 @@ function Footer({ onOpenWaitlist, onOpenLegal }) {
 function App() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const [legalView, setLegalView] = useState(null);
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
     <main className="app-shell min-h-screen">
@@ -864,13 +927,18 @@ function App() {
       <Features />
       <OurStory />
       <FAQ />
-      <Footer onOpenWaitlist={() => setIsWaitlistOpen(true)} onOpenLegal={setLegalView} />
+      <Footer
+        onOpenWaitlist={() => setIsWaitlistOpen(true)}
+        onOpenLegal={setLegalView}
+        onOpenContact={() => setIsContactOpen(true)}
+      />
       <WaitlistModal
         isOpen={isWaitlistOpen}
         onClose={() => setIsWaitlistOpen(false)}
         onOpenLegal={setLegalView}
       />
       <LegalModal view={legalView} onClose={() => setLegalView(null)} />
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </main>
   );
 }

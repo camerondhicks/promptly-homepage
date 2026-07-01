@@ -17,25 +17,25 @@ import {
 } from "lucide-react";
 
 const navLinks = [
+  { label: "How It Works", href: "#how-it-works" },
   { label: "Features", href: "#features" },
-  { label: "How It Will Work", href: "#how-it-works" },
   { label: "Our Story", href: "#our-story" },
 ];
 
 const features = [
   {
     title: "Live Openings Feed",
-    body: "Students will filter instantly by Technology, Healthcare, Science, and Policy while tracking exact deadlines and opening times.",
+    body: "Students will choose the industries, roles, and opportunity types they care about, then see relevant openings organized around their interests.",
     icon: Radar,
   },
   {
     title: "Recruiting Cycles Timeline",
-    body: "Students will visualize the entire year and know when companies like NASA, Mayo Clinic, and Spotify typically open their applications.",
+    body: "Students will visualize the year ahead and understand when competitive roles typically open, peak, and close across different fields.",
     icon: CalendarDays,
   },
   {
     title: "Multi-Channel Alerts",
-    body: "Students will receive instant push notifications directly to their lock screen, alongside daily email digests and SMS alerts for time-sensitive roles.",
+    body: "Students will receive time-sensitive app notifications for urgent openings and email updates for roles that match their saved filters.",
     icon: Bell,
   },
 ];
@@ -449,7 +449,7 @@ function WaitlistCTA({ compact = false, onOpenWaitlist }) {
         </button>
       </form>
       <p className="mt-3 text-center text-xs font-bold text-slate-500 sm:text-left">
-        Free to join • No spam • Unsubscribe anytime
+        Free to join • No spam • Early access updates only
       </p>
     </div>
   );
@@ -466,7 +466,7 @@ function DashboardMockup() {
           <div className="mb-5 flex items-center justify-between">
             <div>
               <p className="text-[0.68rem] font-black uppercase tracking-[0.2em] text-violet-300">Mission control</p>
-              <h2 className="mt-1 text-2xl font-black tracking-tight text-white sm:text-4xl">Good Morning</h2>
+              <h2 className="mt-1 text-2xl font-black tracking-tight text-white sm:text-4xl">Hello, user</h2>
             </div>
             <div className="hidden items-center gap-2 sm:flex">
               <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/8 text-slate-300 ring-1 ring-white/10">
@@ -627,7 +627,9 @@ function Features() {
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
           <p className="section-kicker">Features</p>
-          <h2 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">What It Will Do</h2>
+          <h2 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">
+            Built Around Your Search
+          </h2>
         </div>
         <div className="mt-12 grid gap-4 md:grid-cols-3">
           {features.map((feature) => (
@@ -653,23 +655,37 @@ function Features() {
 
 function HowItWorks() {
   return (
-    <section id="how-it-works" className="border-y border-white/10 bg-black/14 px-5 py-24 sm:px-8">
+    <section
+      id="how-it-works"
+      className="border-y border-violet-300/10 bg-gradient-to-b from-violet-950/24 via-black/16 to-transparent px-5 py-24 sm:px-8"
+    >
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="section-kicker">How It Will Work</p>
-          <h2 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">Step-by-Step</h2>
+          <p className="section-kicker">How It Works</p>
+          <h2 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">
+            From Filters to First Access
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base font-medium leading-7 text-slate-300">
+            Promptly will turn a student’s search preferences into instant alerts for opportunities that match.
+          </p>
         </div>
         <div className="mt-12 grid gap-4 lg:grid-cols-3">
           {steps.map((step, index) => {
             const Icon = step.icon;
             return (
-              <article key={step.title} className="glass relative rounded-3xl p-6 transition duration-300 hover:-translate-y-1">
+              <article
+                key={step.title}
+                className="glass relative overflow-hidden rounded-3xl p-6 transition duration-300 hover:-translate-y-1 hover:border-violet-300/30 hover:bg-white/12"
+              >
                 {index < steps.length - 1 && (
                   <div className="absolute -right-7 top-1/2 z-10 hidden h-px w-10 bg-gradient-to-r from-violet-300 to-transparent lg:block" />
                 )}
+                <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-400 to-violet-500" />
                 <div className="mb-8 flex items-center justify-between">
-                  <span className="text-sm font-black uppercase tracking-widest text-slate-500">Step {index + 1}</span>
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/8 text-sky-200 ring-1 ring-white/10">
+                  <span className="rounded-full bg-violet-500/20 px-3 py-1 text-sm font-black uppercase tracking-widest text-violet-200">
+                    Step {index + 1}
+                  </span>
+                  <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-violet-600 text-white shadow-lg shadow-violet-900/30">
                     <Icon className="h-6 w-6" />
                   </span>
                 </div>
@@ -806,7 +822,7 @@ function Footer({ onOpenWaitlist, onOpenLegal }) {
                   Features
                 </a>
                 <a className="transition hover:text-white" href="#how-it-works">
-                  How It Will Work
+                  How It Works
                 </a>
                 <a className="transition hover:text-white" href="#our-story">
                   Our Story
@@ -844,8 +860,8 @@ function App() {
     <main className="app-shell min-h-screen">
       <Navigation onOpenWaitlist={() => setIsWaitlistOpen(true)} />
       <Hero onOpenWaitlist={() => setIsWaitlistOpen(true)} />
-      <Features />
       <HowItWorks />
+      <Features />
       <OurStory />
       <FAQ />
       <Footer onOpenWaitlist={() => setIsWaitlistOpen(true)} onOpenLegal={setLegalView} />

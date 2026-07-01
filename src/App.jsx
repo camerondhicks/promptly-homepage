@@ -248,7 +248,7 @@ function ContactModal({ isOpen, onClose }) {
   const contactLinks = [
     { label: "Instagram", value: "@joinpromptly", href: "https://www.instagram.com/joinpromptly" },
     { label: "Email", value: "help.promptly@gmail.com", href: "mailto:help.promptly@gmail.com" },
-    { label: "TikTok", value: "@promplty25", href: "https://www.tiktok.com/@promplty25" },
+    { label: "TikTok", value: "@promptly25", href: "https://www.tiktok.com/@promptly25" },
   ];
 
   return (

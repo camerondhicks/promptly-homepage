@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   Bell,
@@ -133,6 +133,8 @@ const waitlistInitialState = {
   email: "",
   phone: "",
 };
+
+const revealStyle = (index = 0) => ({ "--reveal-delay": `${index * 90}ms` });
 
 const legalContent = {
   privacy: {
@@ -672,11 +674,14 @@ function Hero({ onOpenWaitlist }) {
   );
 }
 
-function FeatureCard({ feature }) {
+function FeatureCard({ feature, index }) {
   const Icon = feature.icon;
 
   return (
-    <article className="glass group rounded-3xl p-6 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/12">
+    <article
+      className="scroll-reveal glass group rounded-3xl p-6 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/12"
+      style={revealStyle(index)}
+    >
       <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-violet-600 shadow-lg shadow-violet-900/25 transition duration-300 group-hover:scale-105">
         <Icon className="h-7 w-7 text-white" />
       </div>
@@ -697,11 +702,11 @@ function Features() {
           </h2>
         </div>
         <div className="mt-12 grid gap-4 md:grid-cols-3">
-          {features.map((feature) => (
-            <FeatureCard key={feature.title} feature={feature} />
+          {features.map((feature, index) => (
+            <FeatureCard key={feature.title} feature={feature} index={index} />
           ))}
         </div>
-        <div className="glass mt-5 flex flex-col gap-4 rounded-3xl p-5 sm:flex-row sm:items-center">
+        <div className="scroll-reveal glass mt-5 flex flex-col gap-4 rounded-3xl p-5 sm:flex-row sm:items-center">
           <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400/20 to-violet-500/25 text-sky-200 ring-1 ring-white/10">
             <Search className="h-6 w-6" />
           </span>
@@ -723,9 +728,8 @@ function UIExample() {
     <section className="px-5 py-24 sm:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
-          <div>
-            <p className="section-kicker">UI Preview</p>
-            <h2 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">
+          <div className="scroll-reveal">
+            <h2 className="text-4xl font-black tracking-tight text-white sm:text-5xl">
               See the Feed Before the Window Closes
             </h2>
             <p className="mt-5 text-base font-medium leading-8 text-slate-300">
@@ -733,7 +737,7 @@ function UIExample() {
               focused dashboard.
             </p>
           </div>
-          <div className="glass overflow-hidden rounded-[2rem] p-3 shadow-2xl shadow-violet-950/35">
+          <div className="scroll-reveal glass overflow-hidden rounded-[2rem] p-3 shadow-2xl shadow-violet-950/35" style={revealStyle(1)}>
             <img
               src="/ui/student-alert-feed.png"
               alt="Promptly student alert feed UI preview"
@@ -769,7 +773,8 @@ function HowItWorks() {
             return (
               <article
                 key={step.title}
-                className="glass relative rounded-3xl p-6 transition duration-300 hover:-translate-y-1 hover:border-violet-300/30 hover:bg-white/12"
+                className="scroll-reveal glass relative rounded-3xl p-6 transition duration-300 hover:-translate-y-1 hover:border-violet-300/30 hover:bg-white/12"
+                style={revealStyle(index)}
               >
                 {index < steps.length - 1 && (
                   <div className="absolute -right-7 top-1/2 z-10 hidden h-px w-10 bg-gradient-to-r from-violet-300 to-transparent lg:block" />
@@ -798,7 +803,7 @@ function OurStory() {
   return (
     <section id="our-story" className="px-5 py-24 sm:px-8">
       <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-        <div className="glass rounded-[2rem] p-6">
+        <div className="scroll-reveal glass rounded-[2rem] p-6">
           <div className="rounded-[1.5rem] border border-white/10 bg-[#151824] p-5">
             <div className="mb-8 flex items-center justify-between">
               <span className="section-kicker">Why timing matters</span>
@@ -820,6 +825,7 @@ function OurStory() {
                   <div
                     key={item.label}
                     className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/6 p-4 transition duration-300 hover:border-violet-300/30 hover:bg-white/10"
+                    style={revealStyle(1)}
                   >
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400/20 to-violet-500/25 text-sky-200 ring-1 ring-white/10">
                       <Icon className="h-5 w-5" />
@@ -832,7 +838,7 @@ function OurStory() {
           </div>
         </div>
 
-        <div>
+        <div className="scroll-reveal" style={revealStyle(1)}>
           <p className="section-kicker">Founders Note</p>
           <h2 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">Timing Is the Difference</h2>
           <div className="glass mt-8 rounded-[2rem] p-6 sm:p-8">
@@ -865,10 +871,14 @@ function FAQ() {
           </h2>
         </div>
         <div className="space-y-3">
-          {faqItems.map((faq) => {
+          {faqItems.map((faq, index) => {
             const isOpen = openQuestion === faq.question;
             return (
-              <div key={faq.question} className="glass rounded-3xl transition duration-300 hover:border-white/18">
+              <div
+                key={faq.question}
+                className="scroll-reveal glass rounded-3xl transition duration-300 hover:border-white/18"
+                style={revealStyle(index % 4)}
+              >
                 <button
                   type="button"
                   className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left"
@@ -904,7 +914,7 @@ function Footer({ onOpenWaitlist, onOpenLegal, onOpenContact }) {
   return (
     <footer className="px-5 py-12 sm:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="glass rounded-[2rem] p-6 sm:p-8">
+        <div className="scroll-reveal glass rounded-[2rem] p-6 sm:p-8">
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
               <Logo />
@@ -950,6 +960,31 @@ function App() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const [legalView, setLegalView] = useState(null);
   const [isContactOpen, setIsContactOpen] = useState(false);
+
+  useEffect(() => {
+    const revealItems = Array.from(document.querySelectorAll(".scroll-reveal"));
+
+    if (!("IntersectionObserver" in window)) {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.18, rootMargin: "0px 0px -8% 0px" },
+    );
+
+    revealItems.forEach((item) => observer.observe(item));
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <main className="app-shell min-h-screen">

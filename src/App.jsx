@@ -145,31 +145,12 @@ const studentFeedRows = [
     active: true,
   },
   {
-    company: "Cloudflare",
-    role: "Global Trade Compliance Intern",
-    season: "Summer 2026",
-    status: "See posting · Live · In-Office",
-    location: "In-Office",
-    source: "Cloudflare - verified live posting",
-    tag: "Technology",
-    logo: "https://www.google.com/s2/favicons?domain=cloudflare.com&sz=128",
-  },
-  {
     company: "Pfizer",
     role: "2027 Summer Internship",
     season: "Summer 2027",
     status: "Awaiting the 2027 posting. Promptly will alert you the moment it opens.",
     tag: "Healthcare",
     logo: "https://www.google.com/s2/favicons?domain=pfizer.com&sz=128",
-    waiting: true,
-  },
-  {
-    company: "Broad Institute",
-    role: "2027 Summer Internship",
-    season: "Summer 2027",
-    status: "Awaiting the 2027 posting. Promptly will alert you the moment it opens.",
-    tag: "Science",
-    logo: "https://www.google.com/s2/favicons?domain=broadinstitute.org&sz=128",
     waiting: true,
   },
 ];
@@ -778,21 +759,21 @@ function Features() {
 
 function StudentFeedPreview() {
   return (
-    <div className="relative mx-auto max-w-2xl overflow-hidden rounded-[1.75rem] border border-white/12 bg-[#151626] p-3 shadow-2xl shadow-violet-950/40 sm:p-4">
+    <div className="relative mx-auto max-w-xl overflow-hidden rounded-[1.65rem] border border-white/12 bg-[#151626] p-3 shadow-2xl shadow-violet-950/40">
       <div className="absolute inset-0 bg-gradient-to-br from-violet-500/16 via-transparent to-sky-500/10" />
       <div className="relative">
-        <div className="mb-4 flex items-start justify-between gap-4">
+        <div className="mb-3 flex items-start justify-between gap-4">
           <div>
             <p className="text-[0.68rem] font-black uppercase tracking-[0.2em] text-violet-300">
               Student alert dashboard
             </p>
-            <h3 className="mt-1 text-2xl font-black tracking-tight text-white sm:text-3xl">Student Alert Feed</h3>
+            <h3 className="mt-1 text-2xl font-black tracking-tight text-white">Student Alert Feed</h3>
           </div>
           <div className="hidden items-center gap-2 sm:flex">
-            <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white/10 text-slate-300 ring-1 ring-white/10">
+            <span className="flex h-8 w-8 items-center justify-center rounded-2xl bg-white/10 text-slate-300 ring-1 ring-white/10">
               <Search className="h-4 w-4" />
             </span>
-            <span className="relative flex h-9 w-9 items-center justify-center rounded-2xl bg-white/10 text-slate-300 ring-1 ring-white/10">
+            <span className="relative flex h-8 w-8 items-center justify-center rounded-2xl bg-white/10 text-slate-300 ring-1 ring-white/10">
               <Bell className="h-4 w-4" />
               <span className="absolute -right-1 -top-1 rounded-full bg-violet-500 px-1.5 py-0.5 text-[0.62rem] font-black text-white">
                 82
@@ -801,16 +782,16 @@ function StudentFeedPreview() {
           </div>
         </div>
 
-        <div className="rounded-[1.35rem] border border-white/10 bg-white/8 p-3">
-          <div className="flex items-center gap-3 rounded-2xl bg-black/24 px-4 py-2.5 text-xs font-semibold text-slate-500 sm:text-sm">
+        <div className="rounded-[1.25rem] border border-white/10 bg-white/8 p-2.5">
+          <div className="flex items-center gap-3 rounded-2xl bg-black/24 px-3 py-2 text-xs font-semibold text-slate-500">
             <Search className="h-4 w-4 shrink-0" />
             Search Google, Goldman, McKinsey, Amazon...
           </div>
-          <div className="mt-3 flex gap-2 overflow-hidden">
+          <div className="mt-2.5 flex gap-2 overflow-hidden">
             {["All", "Technology", "Healthcare", "Science", "Saved"].map((filter) => (
               <span
                 key={filter}
-                className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-black ${
+                className={`shrink-0 rounded-full px-2.5 py-1 text-[0.68rem] font-black ${
                   filter === "All"
                     ? "bg-violet-500/55 text-white"
                     : "border border-white/10 bg-white/10 text-slate-300"
@@ -822,30 +803,22 @@ function StudentFeedPreview() {
           </div>
         </div>
 
-        <div className="relative mt-4 space-y-2.5">
+        <div className="relative mt-3 space-y-2">
           {studentFeedRows.map((item, index) => (
             <article
               key={item.company}
-              className={`relative grid min-h-[7.25rem] grid-cols-[3rem_minmax(0,1fr)] items-center gap-3 rounded-[1.35rem] border p-3 shadow-xl transition duration-300 sm:grid-cols-[3rem_minmax(0,1fr)_5.5rem] ${
-                item.featured
-                  ? "z-20 border-white/14 bg-[#242936] shadow-black/35"
-                : item.active
-                    ? "z-10 border-violet-300/20 bg-violet-500/20 shadow-violet-950/30"
-                    : item.waiting
-                      ? "border-white/8 bg-white/7"
-                      : "border-white/10 bg-white/10"
-              }`}
+              className="relative grid min-h-[5.7rem] grid-cols-[2.75rem_minmax(0,1fr)] items-center gap-3 rounded-[1.2rem] border border-violet-200/12 bg-[#342f52]/82 p-3 shadow-lg shadow-violet-950/24 transition duration-300 sm:grid-cols-[2.75rem_minmax(0,1fr)_5rem]"
               style={item.featured ? revealStyle(1) : undefined}
             >
-              <span className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl bg-white p-2 shadow-lg shadow-black/20 ring-1 ring-white/10">
+              <span className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-white p-2 shadow-lg shadow-black/20 ring-1 ring-white/10">
                 <img src={item.logo} alt="" className="h-full w-full object-contain" loading="lazy" />
               </span>
               <div className="min-w-0 flex-1">
                 <span className="rounded-full bg-violet-500/28 px-2.5 py-1 text-[0.62rem] font-black text-violet-100">
                   {item.tag}
                 </span>
-                <h4 className="mt-1 truncate text-sm font-black text-white sm:text-base">{item.company}</h4>
-                <p className="truncate text-xs font-semibold text-slate-300 sm:text-sm">
+                <h4 className="mt-1 truncate text-sm font-black text-white">{item.company}</h4>
+                <p className="truncate text-xs font-semibold text-slate-300">
                   {item.role} · {item.season}
                 </p>
                 <p className={`mt-1 truncate text-[0.68rem] font-bold ${item.waiting ? "text-amber-200/80" : "text-slate-400"}`}>
@@ -855,17 +828,17 @@ function StudentFeedPreview() {
                   <div className="mt-2 h-1.5 rounded-full bg-gradient-to-r from-amber-400/45 to-rose-400/30" />
                 ) : (
                   <>
-                    <p className="truncate text-[0.68rem] font-bold text-slate-500">Location: {item.location}</p>
-                    <p className="truncate text-[0.68rem] font-bold text-slate-500">Student fit: AI match 98%</p>
+                    <p className="truncate text-[0.68rem] font-bold text-slate-400">Location: {item.location}</p>
+                    <p className="truncate text-[0.68rem] font-bold text-slate-400">Student fit: AI match 98%</p>
                   </>
                 )}
               </div>
               <div className="hidden justify-end gap-2 sm:flex">
-                <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white/10 text-slate-200 ring-1 ring-white/10">
+                <span className="flex h-8 w-8 items-center justify-center rounded-2xl bg-white/10 text-slate-200 ring-1 ring-white/10">
                   <Star className="h-4 w-4" />
                 </span>
                 {!item.waiting && (
-                  <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-violet-600 text-white">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-2xl bg-violet-600 text-white">
                     <ArrowRight className="h-4 w-4 -rotate-45" />
                   </span>
                 )}

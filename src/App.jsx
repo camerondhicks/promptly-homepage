@@ -506,7 +506,7 @@ function WaitlistCTA({ compact = false, onOpenWaitlist }) {
           type="submit"
           className="gradient-button inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-black text-white transition duration-300 hover:-translate-y-0.5 sm:text-base"
         >
-          Get Early Access
+          Join Priority Waitlist
           <ArrowRight className="h-4 w-4" />
         </button>
       </form>

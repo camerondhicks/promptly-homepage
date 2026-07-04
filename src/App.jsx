@@ -498,7 +498,7 @@ function WaitlistCTA({ compact = false, onOpenWaitlist }) {
             type="email"
             readOnly
             onFocus={onOpenWaitlist}
-            placeholder="Enter your school email"
+            placeholder="Join priority waitlist"
             className="w-full bg-transparent text-sm font-medium text-white outline-none placeholder:text-slate-500 sm:text-base"
           />
         </div>
@@ -506,7 +506,7 @@ function WaitlistCTA({ compact = false, onOpenWaitlist }) {
           type="submit"
           className="gradient-button inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-black text-white transition duration-300 hover:-translate-y-0.5 sm:text-base"
         >
-          Join Priority Waitlist
+          Get Early Access
           <ArrowRight className="h-4 w-4" />
         </button>
       </form>

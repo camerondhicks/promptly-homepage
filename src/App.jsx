@@ -498,7 +498,7 @@ function WaitlistCTA({ compact = false, onOpenWaitlist }) {
             type="email"
             readOnly
             onFocus={onOpenWaitlist}
-            placeholder="Join priority waitlist"
+            placeholder="Join the priority waitlist"
             className="w-full bg-transparent text-sm font-medium text-white outline-none placeholder:text-slate-500 sm:text-base"
           />
         </div>
@@ -718,6 +718,35 @@ function Features() {
   );
 }
 
+function UIExample() {
+  return (
+    <section className="px-5 py-24 sm:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
+          <div>
+            <p className="section-kicker">UI Preview</p>
+            <h2 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">
+              See the Feed Before the Window Closes
+            </h2>
+            <p className="mt-5 text-base font-medium leading-8 text-slate-300">
+              The student alert feed will bring matched openings, filters, saved roles, and source details into one
+              focused dashboard.
+            </p>
+          </div>
+          <div className="glass overflow-hidden rounded-[2rem] p-3 shadow-2xl shadow-violet-950/35">
+            <img
+              src="/ui/student-alert-feed.png"
+              alt="Promptly student alert feed UI preview"
+              className="w-full rounded-[1.5rem] border border-white/10 object-cover"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function HowItWorks() {
   return (
     <section
@@ -927,6 +956,7 @@ function App() {
       <Navigation onOpenWaitlist={() => setIsWaitlistOpen(true)} />
       <Hero onOpenWaitlist={() => setIsWaitlistOpen(true)} />
       <HowItWorks />
+      <UIExample />
       <Features />
       <OurStory />
       <FAQ />

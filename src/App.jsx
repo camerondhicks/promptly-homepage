@@ -554,12 +554,15 @@ function DashboardMockup() {
               <h3 className="max-w-xl text-3xl font-black leading-tight text-white sm:text-4xl">
                 Google Associate Product Manager just opened 18 min ago.
               </h3>
+              <p className="mt-3 text-sm font-semibold text-slate-300">
+                Technology student alert · Deadline Rolling. Opened recently.
+              </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <span className="gradient-button inline-flex rounded-2xl px-5 py-3 text-sm font-black text-white">
                   Apply Now
                 </span>
                 <span className="inline-flex rounded-2xl border border-white/12 bg-white/10 px-5 py-3 text-sm font-bold text-white">
-                  Save
+                  Save Alert
                 </span>
               </div>
             </div>
@@ -880,11 +883,11 @@ function Footer({ onOpenWaitlist, onOpenLegal, onOpenContact }) {
                 Join the waitlist to get instant internship and job alerts when Promptly launches.
               </p>
               <div className="mt-5 flex flex-wrap gap-4 text-sm font-bold text-slate-400">
-                <a className="transition hover:text-white" href="#features">
-                  Features
-                </a>
                 <a className="transition hover:text-white" href="#how-it-works">
                   How It Works
+                </a>
+                <a className="transition hover:text-white" href="#features">
+                  Features
                 </a>
                 <a className="transition hover:text-white" href="#our-story">
                   Founders Note

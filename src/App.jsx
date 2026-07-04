@@ -121,6 +121,59 @@ const openingRows = [
   },
 ];
 
+const studentFeedRows = [
+  {
+    company: "Replit",
+    role: "Software Engineering Intern",
+    season: "Summer 2026",
+    status: "See posting · Live · Foster City",
+    location: "Foster City, CA",
+    source: "Replit - verified live posting",
+    tag: "Technology",
+    logo: "https://www.google.com/s2/favicons?domain=replit.com&sz=128",
+    featured: true,
+  },
+  {
+    company: "Roblox",
+    role: "[2026] Applied Scientist - PhD Intern",
+    season: "Summer 2026",
+    status: "See posting · Live · San Mateo",
+    location: "San Mateo, CA, United States",
+    source: "Roblox - verified live posting",
+    tag: "Technology",
+    logo: "https://www.google.com/s2/favicons?domain=roblox.com&sz=128",
+    active: true,
+  },
+  {
+    company: "Cloudflare",
+    role: "Global Trade Compliance Intern",
+    season: "Summer 2026",
+    status: "See posting · Live · In-Office",
+    location: "In-Office",
+    source: "Cloudflare - verified live posting",
+    tag: "Technology",
+    logo: "https://www.google.com/s2/favicons?domain=cloudflare.com&sz=128",
+  },
+  {
+    company: "Pfizer",
+    role: "2027 Summer Internship",
+    season: "Summer 2027",
+    status: "Awaiting the 2027 posting. Promptly will alert you the moment it opens.",
+    tag: "Healthcare",
+    logo: "https://www.google.com/s2/favicons?domain=pfizer.com&sz=128",
+    waiting: true,
+  },
+  {
+    company: "Broad Institute",
+    role: "2027 Summer Internship",
+    season: "Summer 2027",
+    status: "Awaiting the 2027 posting. Promptly will alert you the moment it opens.",
+    tag: "Science",
+    logo: "https://www.google.com/s2/favicons?domain=broadinstitute.org&sz=128",
+    waiting: true,
+  },
+];
+
 const storySignals = [
   { label: "First access to openings", icon: Zap },
   { label: "Hear from postings first", icon: Radar },
@@ -723,6 +776,113 @@ function Features() {
   );
 }
 
+function StudentFeedPreview() {
+  return (
+    <div className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-[#151626] p-4 shadow-2xl shadow-violet-950/40 sm:p-5">
+      <div className="absolute inset-0 bg-gradient-to-br from-violet-500/16 via-transparent to-sky-500/10" />
+      <div className="relative">
+        <div className="mb-5 flex items-start justify-between gap-4">
+          <div>
+            <p className="text-[0.68rem] font-black uppercase tracking-[0.2em] text-violet-300">
+              Student alert dashboard
+            </p>
+            <h3 className="mt-1 text-3xl font-black tracking-tight text-white sm:text-4xl">Student Alert Feed</h3>
+          </div>
+          <div className="hidden items-center gap-2 sm:flex">
+            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-slate-300 ring-1 ring-white/10">
+              <Search className="h-5 w-5" />
+            </span>
+            <span className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-slate-300 ring-1 ring-white/10">
+              <Bell className="h-5 w-5" />
+              <span className="absolute -right-1 -top-1 rounded-full bg-violet-500 px-1.5 py-0.5 text-[0.62rem] font-black text-white">
+                82
+              </span>
+            </span>
+            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-violet-600 text-sm font-black text-white">
+              C
+            </span>
+          </div>
+        </div>
+
+        <div className="rounded-[1.55rem] border border-white/10 bg-white/8 p-3">
+          <div className="flex items-center gap-3 rounded-2xl bg-black/24 px-4 py-3 text-sm font-semibold text-slate-500">
+            <Search className="h-4 w-4 shrink-0" />
+            Search Google, Goldman, McKinsey, Amazon...
+          </div>
+          <div className="mt-3 flex gap-2 overflow-hidden">
+            {["All", "Technology", "Healthcare", "Science", "Saved"].map((filter) => (
+              <span
+                key={filter}
+                className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-black ${
+                  filter === "All"
+                    ? "bg-violet-500/55 text-white"
+                    : "border border-white/10 bg-white/10 text-slate-300"
+                }`}
+              >
+                {filter}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative mt-4 space-y-3">
+          {studentFeedRows.map((item, index) => (
+            <article
+              key={item.company}
+              className={`relative flex items-center gap-3 rounded-[1.45rem] border p-4 shadow-xl transition duration-300 ${
+                item.featured
+                  ? "z-20 border-white/14 bg-[#242936] shadow-black/35"
+                  : item.active
+                    ? "z-10 border-violet-300/20 bg-violet-500/20 shadow-violet-950/30 sm:-mt-1 sm:ml-4 sm:mr-4"
+                    : item.waiting
+                      ? "border-white/8 bg-white/7"
+                      : "border-white/10 bg-white/10"
+              }`}
+              style={item.featured ? revealStyle(1) : undefined}
+            >
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-2 shadow-lg shadow-black/20 ring-1 ring-white/10">
+                <img src={item.logo} alt="" className="h-full w-full object-contain" loading="lazy" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <span className="rounded-full bg-violet-500/28 px-2.5 py-1 text-[0.62rem] font-black text-violet-100">
+                  {item.tag}
+                </span>
+                <h4 className="mt-1 truncate text-sm font-black text-white sm:text-base">{item.company}</h4>
+                <p className="truncate text-xs font-semibold text-slate-300 sm:text-sm">
+                  {item.role} · {item.season}
+                </p>
+                <p className={`mt-1 truncate text-[0.68rem] font-bold ${item.waiting ? "text-amber-200/80" : "text-slate-400"}`}>
+                  {item.status}
+                </p>
+                {!item.waiting && (
+                  <>
+                    <p className="truncate text-[0.68rem] font-bold text-slate-500">Location: {item.location}</p>
+                    <p className="truncate text-[0.68rem] font-bold text-slate-500">Student fit: AI match 98%</p>
+                    <p className="truncate text-[0.68rem] font-bold text-slate-500">Verified source: {item.source}</p>
+                  </>
+                )}
+              </div>
+              <div className="hidden shrink-0 items-center gap-2 sm:flex">
+                <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white/10 text-slate-200 ring-1 ring-white/10">
+                  <Star className="h-4 w-4" />
+                </span>
+                {!item.waiting && (
+                  <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-violet-600 text-white">
+                    <ArrowRight className="h-4 w-4 -rotate-45" />
+                  </span>
+                )}
+              </div>
+              {index === 0 && (
+                <div className="absolute inset-x-2 -bottom-3 h-3 rounded-b-3xl bg-black/35 blur-sm" />
+              )}
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function UIExample() {
   return (
     <section className="px-5 py-24 sm:px-8">
@@ -737,13 +897,8 @@ function UIExample() {
               focused dashboard.
             </p>
           </div>
-          <div className="scroll-reveal glass overflow-hidden rounded-[2rem] p-3 shadow-2xl shadow-violet-950/35" style={revealStyle(1)}>
-            <img
-              src="/ui/student-alert-feed.png"
-              alt="Promptly student alert feed UI preview"
-              className="w-full rounded-[1.5rem] border border-white/10 object-cover"
-              loading="lazy"
-            />
+          <div className="scroll-reveal" style={revealStyle(1)}>
+            <StudentFeedPreview />
           </div>
         </div>
       </div>

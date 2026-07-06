@@ -807,7 +807,11 @@ function StudentFeedPreview() {
           {studentFeedRows.map((item, index) => (
             <article
               key={item.company}
-              className="relative grid min-h-[5.7rem] grid-cols-[2.75rem_minmax(0,1fr)] items-center gap-3 rounded-[1.2rem] border border-violet-200/12 bg-[#342f52]/82 p-3 shadow-lg shadow-violet-950/24 transition duration-300 sm:grid-cols-[2.75rem_minmax(0,1fr)_5rem]"
+              className={`relative grid min-h-[5.7rem] grid-cols-[2.75rem_minmax(0,1fr)] items-center gap-3 rounded-[1.2rem] border p-3 shadow-lg transition duration-300 sm:grid-cols-[2.75rem_minmax(0,1fr)_5rem] ${
+                item.waiting
+                  ? "border-white/10 bg-gradient-to-r from-slate-600/26 via-[#38384f]/36 to-violet-700/18 shadow-black/20"
+                  : "border-violet-200/12 bg-[#342f52]/82 shadow-violet-950/24"
+              }`}
               style={item.featured ? revealStyle(1) : undefined}
             >
               <span className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-white p-2 shadow-lg shadow-black/20 ring-1 ring-white/10">
@@ -821,11 +825,11 @@ function StudentFeedPreview() {
                 <p className="truncate text-xs font-semibold text-slate-300">
                   {item.role} · {item.season}
                 </p>
-                <p className={`mt-1 truncate text-[0.68rem] font-bold ${item.waiting ? "text-amber-200/80" : "text-slate-400"}`}>
+                <p className={`mt-1 truncate text-[0.68rem] font-bold ${item.waiting ? "text-slate-400" : "text-slate-400"}`}>
                   {item.status}
                 </p>
                 {item.waiting ? (
-                  <div className="mt-2 h-1.5 rounded-full bg-gradient-to-r from-amber-400/45 to-rose-400/30" />
+                  <div className="mt-2 h-1.5 rounded-full border border-white/8 bg-gradient-to-r from-slate-500/45 via-violet-500/18 to-slate-500/20" />
                 ) : (
                   <>
                     <p className="truncate text-[0.68rem] font-bold text-slate-400">Location: {item.location}</p>
@@ -972,10 +976,10 @@ function OurStory() {
               Promptly was founded in response to the immense pressure of securing competitive roles at top-tier
               institutions. The platform was built upon a frustrating truth: getting a foot in the door is not just
               about qualifications; a large part is almost entirely about timing. Highly qualified candidates often miss
-              out on career-defining internships simply because they discover the postings a few days too late. Created
-              to prevent the window for these opportunities from closing before applicants even know they are open, the
-              platform will help level the playing field. Promptly will bridge the critical gap between
-              exceptional talent and perfect timing.
+              out on career-defining internships simply because they discover the postings a few days too late.
+              Promptly exists to stop that window from closing before applicants even know the opportunity is there.
+              The platform levels the playing field, bridging the vital gap between being an exceptional candidate and
+              having perfect timing.
             </p>
           </div>
         </div>

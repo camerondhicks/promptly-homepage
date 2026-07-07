@@ -135,7 +135,7 @@ const studentFeedRows = [
   },
   {
     company: "Roblox",
-    role: "[2026] Applied Scientist - PhD Intern",
+    role: "Applied Scientist - PhD Intern",
     season: "Summer 2026",
     status: "See posting · Live · San Mateo",
     location: "San Mateo, CA, United States",
@@ -148,7 +148,7 @@ const studentFeedRows = [
     company: "Pfizer",
     role: "2027 Summer Internship",
     season: "Summer 2027",
-    status: "Awaiting the 2027 posting. Promptly will alert you the moment it opens.",
+    status: "Promptly will alert you the moment it opens...",
     tag: "Healthcare",
     logo: "https://www.google.com/s2/favicons?domain=pfizer.com&sz=128",
     waiting: true,
@@ -829,7 +829,7 @@ function StudentFeedPreview() {
                   {item.status}
                 </p>
                 {item.waiting ? (
-                  <div className="mt-2 h-1.5 rounded-full border border-white/8 bg-gradient-to-r from-slate-500/45 via-violet-500/18 to-slate-500/20" />
+                  <div className="mt-2 h-1.5 rounded-full border border-white/8 bg-gradient-to-r from-sky-400/50 via-violet-500/42 to-fuchsia-400/32" />
                 ) : (
                   <>
                     <p className="truncate text-[0.68rem] font-bold text-slate-400">Location: {item.location}</p>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import {
   ArrowRight,
   Bell,
@@ -1145,6 +1146,7 @@ function App() {
       <LegalModal view={legalView} onClose={() => setLegalView(null)} />
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
       <Analytics />
+      <SpeedInsights />
     </main>
   );
 }

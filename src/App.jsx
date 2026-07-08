@@ -107,11 +107,11 @@ const openingRows = [
     logo: "https://www.google.com/s2/favicons?domain=google.com&sz=128",
   },
   {
-    company: "Palantir",
-    role: "Software Engineering Intern",
+    company: "Tesla",
+    role: "Vehicle Software Intern",
     meta: "Opened 1 hr ago",
     tag: "Technology",
-    logo: "https://www.google.com/s2/favicons?domain=palantir.com&sz=128",
+    logo: "https://www.google.com/s2/favicons?domain=tesla.com&sz=128",
   },
   {
     company: "Amazon",
@@ -285,7 +285,7 @@ function ContactModal({ isOpen, onClose }) {
   const contactLinks = [
     { label: "Instagram", value: "@joinpromptly", href: "https://www.instagram.com/joinpromptly" },
     { label: "Email", value: "help.promptly@gmail.com", href: "mailto:help.promptly@gmail.com" },
-    { label: "TikTok", value: "@promptly25", href: "https://www.tiktok.com/@promptly25" },
+    { label: "TikTok", value: "@joinpromptly", href: "https://www.tiktok.com/@joinpromptly" },
   ];
 
   return (

@@ -107,11 +107,11 @@ const openingRows = [
     logo: "https://www.google.com/s2/favicons?domain=google.com&sz=128",
   },
   {
-    company: "BlackRock",
-    role: "Summer Analyst Program",
+    company: "Palantir",
+    role: "Software Engineering Intern",
     meta: "Opened 1 hr ago",
-    tag: "Finance",
-    logo: "https://www.google.com/s2/favicons?domain=blackrock.com&sz=128",
+    tag: "Technology",
+    logo: "https://www.google.com/s2/favicons?domain=palantir.com&sz=128",
   },
   {
     company: "Amazon",
@@ -760,15 +760,17 @@ function Features() {
 
 function StudentFeedPreview() {
   return (
-    <div className="relative mx-auto max-w-xl overflow-hidden rounded-[1.65rem] border border-white/12 bg-[#151626] p-3 shadow-2xl shadow-violet-950/40">
+    <div className="relative mx-auto w-full max-w-full overflow-hidden rounded-[1.35rem] border border-white/12 bg-[#151626] p-2.5 shadow-2xl shadow-violet-950/40 sm:max-w-xl sm:rounded-[1.65rem] sm:p-3">
       <div className="absolute inset-0 bg-gradient-to-br from-violet-500/16 via-transparent to-sky-500/10" />
       <div className="relative">
-        <div className="mb-3 flex items-start justify-between gap-4">
-          <div>
-            <p className="text-[0.68rem] font-black uppercase tracking-[0.2em] text-violet-300">
+        <div className="mb-3 flex min-w-0 items-start justify-between gap-3">
+          <div className="min-w-0">
+            <p className="text-[0.58rem] font-black uppercase tracking-[0.16em] text-violet-300 sm:text-[0.68rem] sm:tracking-[0.2em]">
               Student alert dashboard
             </p>
-            <h3 className="mt-1 text-2xl font-black tracking-tight text-white">Student Alert Feed</h3>
+            <h3 className="mt-1 text-[1.75rem] font-black leading-none tracking-tight text-white sm:text-2xl">
+              Student Alert Feed
+            </h3>
           </div>
           <div className="hidden items-center gap-2 sm:flex">
             <span className="flex h-8 w-8 items-center justify-center rounded-2xl bg-white/10 text-slate-300 ring-1 ring-white/10">
@@ -783,16 +785,16 @@ function StudentFeedPreview() {
           </div>
         </div>
 
-        <div className="rounded-[1.25rem] border border-white/10 bg-white/8 p-2.5">
-          <div className="flex items-center gap-3 rounded-2xl bg-black/24 px-3 py-2 text-xs font-semibold text-slate-500">
+        <div className="rounded-[1.15rem] border border-white/10 bg-white/8 p-2 sm:rounded-[1.25rem] sm:p-2.5">
+          <div className="flex min-w-0 items-center gap-2 rounded-2xl bg-black/24 px-3 py-2 text-[0.7rem] font-semibold text-slate-500 sm:gap-3 sm:text-xs">
             <Search className="h-4 w-4 shrink-0" />
-            Search Google, Goldman, McKinsey, Amazon...
+            <span className="truncate">Search Google, Goldman, McKinsey, Amazon...</span>
           </div>
-          <div className="mt-2.5 flex gap-2 overflow-hidden">
+          <div className="mt-2.5 flex flex-wrap gap-1.5 sm:gap-2">
             {["All", "Technology", "Healthcare", "Science", "Saved"].map((filter) => (
               <span
                 key={filter}
-                className={`shrink-0 rounded-full px-2.5 py-1 text-[0.68rem] font-black ${
+                className={`shrink-0 rounded-full px-2.5 py-1 text-[0.62rem] font-black sm:text-[0.68rem] ${
                   filter === "All"
                     ? "bg-violet-500/55 text-white"
                     : "border border-white/10 bg-white/10 text-slate-300"
@@ -808,33 +810,37 @@ function StudentFeedPreview() {
           {studentFeedRows.map((item, index) => (
             <article
               key={item.company}
-              className={`relative grid min-h-[5.7rem] grid-cols-[2.75rem_minmax(0,1fr)] items-center gap-3 rounded-[1.2rem] border p-3 shadow-lg transition duration-300 sm:grid-cols-[2.75rem_minmax(0,1fr)_5rem] ${
+              className={`relative grid min-h-[5.25rem] max-w-full grid-cols-[2.35rem_minmax(0,1fr)] items-center gap-2.5 overflow-hidden rounded-[1.05rem] border p-2.5 shadow-lg transition duration-300 sm:min-h-[5.7rem] sm:grid-cols-[2.75rem_minmax(0,1fr)_5rem] sm:gap-3 sm:rounded-[1.2rem] sm:p-3 ${
                 item.waiting
                   ? "border-white/10 bg-gradient-to-r from-slate-600/26 via-[#38384f]/36 to-violet-700/18 shadow-black/20"
                   : "border-violet-200/12 bg-[#342f52]/82 shadow-violet-950/24"
               }`}
               style={item.featured ? revealStyle(1) : undefined}
             >
-              <span className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-white p-2 shadow-lg shadow-black/20 ring-1 ring-white/10">
+              <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-2xl bg-white p-2 shadow-lg shadow-black/20 ring-1 ring-white/10 sm:h-11 sm:w-11">
                 <img src={item.logo} alt="" className="h-full w-full object-contain" loading="lazy" />
               </span>
               <div className="min-w-0 flex-1">
-                <span className="rounded-full bg-violet-500/28 px-2.5 py-1 text-[0.62rem] font-black text-violet-100">
+                <span className="rounded-full bg-violet-500/28 px-2.5 py-1 text-[0.58rem] font-black text-violet-100 sm:text-[0.62rem]">
                   {item.tag}
                 </span>
-                <h4 className="mt-1 truncate text-sm font-black text-white">{item.company}</h4>
-                <p className="truncate text-xs font-semibold text-slate-300">
+                <h4 className="mt-1 truncate text-[0.82rem] font-black text-white sm:text-sm">{item.company}</h4>
+                <p className="truncate text-[0.7rem] font-semibold text-slate-300 sm:text-xs">
                   {item.role} · {item.season}
                 </p>
-                <p className={`mt-1 truncate text-[0.68rem] font-bold ${item.waiting ? "text-slate-400" : "text-slate-400"}`}>
+                <p className="mt-1 truncate text-[0.64rem] font-bold text-slate-400 sm:text-[0.68rem]">
                   {item.status}
                 </p>
                 {item.waiting ? (
                   <div className="mt-2 h-1.5 rounded-full border border-white/8 bg-gradient-to-r from-sky-400/50 via-violet-500/42 to-fuchsia-400/32" />
                 ) : (
                   <>
-                    <p className="truncate text-[0.68rem] font-bold text-slate-400">Location: {item.location}</p>
-                    <p className="truncate text-[0.68rem] font-bold text-slate-400">Student fit: AI match 98%</p>
+                    <p className="truncate text-[0.64rem] font-bold text-slate-400 sm:text-[0.68rem]">
+                      Location: {item.location}
+                    </p>
+                    <p className="truncate text-[0.64rem] font-bold text-slate-400 sm:text-[0.68rem]">
+                      Student fit: AI match 98%
+                    </p>
                   </>
                 )}
               </div>
@@ -861,11 +867,11 @@ function StudentFeedPreview() {
 
 function UIExample() {
   return (
-    <section className="px-5 py-24 sm:px-8">
+    <section className="overflow-hidden px-4 py-16 sm:px-8 sm:py-24">
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-8 lg:grid-cols-[0.85fr_1.05fr] lg:items-center">
-          <div className="scroll-reveal">
-            <h2 className="text-4xl font-black tracking-tight text-white sm:text-5xl">
+        <div className="grid min-w-0 gap-7 lg:grid-cols-[0.85fr_1.05fr] lg:items-center">
+          <div className="scroll-reveal min-w-0">
+            <h2 className="max-w-full text-[2.4rem] font-black leading-[0.98] tracking-tight text-white sm:text-5xl">
               See the Feed Before the Window Closes
             </h2>
             <p className="mt-5 text-base font-medium leading-8 text-slate-300">
@@ -873,7 +879,7 @@ function UIExample() {
               focused dashboard.
             </p>
           </div>
-          <div className="scroll-reveal" style={revealStyle(1)}>
+          <div className="scroll-reveal min-w-0" style={revealStyle(1)}>
             <StudentFeedPreview />
           </div>
         </div>

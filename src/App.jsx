@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import {
   ArrowRight,
   Bell,
@@ -1137,6 +1138,7 @@ function App() {
       />
       <LegalModal view={legalView} onClose={() => setLegalView(null)} />
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
+      <Analytics />
     </main>
   );
 }

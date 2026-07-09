@@ -9,7 +9,6 @@ import {
   ChevronDown,
   Filter,
   Mail,
-  Phone,
   Radar,
   Search,
   Star,
@@ -167,7 +166,6 @@ const waitlistInitialState = {
   firstName: "",
   lastName: "",
   email: "",
-  phone: "",
 };
 
 const revealStyle = (index = 0) => ({ "--reveal-delay": `${index * 90}ms` });
@@ -177,7 +175,7 @@ const legalContent = {
     eyebrow: "Privacy",
     title: "Privacy at Promptly",
     body: [
-      "Promptly will collect waitlist information, including names, email addresses, and phone numbers, so we can manage early access, send product updates, and contact students about the pre-launch program.",
+      "Promptly will collect waitlist information, including names and email addresses, so we can manage early access, send product updates, and contact students about the pre-launch program.",
       "We will not sell your contact information or share it with outside advertisers or unrelated third parties. Waitlist information will stay private inside Promptly's waitlist workflow and will only be used for launch communications, early access, and direct support.",
       "You will be able to unsubscribe from Promptly updates at any time by contacting us.",
     ],
@@ -456,18 +454,6 @@ function WaitlistModal({ isOpen, onClose, onOpenLegal }) {
                   value={form.email}
                   onChange={(event) => updateField("email", event.target.value)}
                   placeholder="Email address"
-                  className="w-full rounded-2xl border border-white/12 bg-white/10 py-4 pl-12 pr-4 text-white outline-none transition placeholder:text-slate-500 focus:border-sky-300/60"
-                />
-              </label>
-              <label className="relative block">
-                <span className="sr-only">Phone number</span>
-                <Phone className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-500" />
-                <input
-                  required
-                  type="tel"
-                  value={form.phone}
-                  onChange={(event) => updateField("phone", event.target.value)}
-                  placeholder="Phone number"
                   className="w-full rounded-2xl border border-white/12 bg-white/10 py-4 pl-12 pr-4 text-white outline-none transition placeholder:text-slate-500 focus:border-sky-300/60"
                 />
               </label>

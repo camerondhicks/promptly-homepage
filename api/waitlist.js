@@ -16,9 +16,8 @@ export default async function handler(request, response) {
   const firstName = String(body.firstName || "").trim();
   const lastName = String(body.lastName || "").trim();
   const email = String(body.email || "").trim();
-  const phone = String(body.phone || "").trim();
 
-  if (!firstName || !lastName || !email || !phone) {
+  if (!firstName || !lastName || !email) {
     return response.status(400).json({ error: "Please complete every field." });
   }
 
@@ -29,7 +28,6 @@ export default async function handler(request, response) {
       firstName,
       lastName,
       email,
-      phone,
       source: "Promptly landing page",
       submittedAt: new Date().toISOString(),
     }),

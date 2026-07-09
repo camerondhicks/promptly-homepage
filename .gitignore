@@ -3,5 +3,6 @@ dist/
 .pnpm-store/
 .DS_Store
 *.log
+*.swp
 .env
 .env.*

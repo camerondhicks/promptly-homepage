@@ -170,22 +170,6 @@ const waitlistInitialState = {
 
 const revealStyle = (index = 0) => ({ "--reveal-delay": `${index * 90}ms` });
 
-function getPriorityWaitlistCount(now = new Date()) {
-  const baseCount = 107;
-  const startTime = Date.UTC(2026, 6, 9);
-  const twoDays = 2 * 24 * 60 * 60 * 1000;
-  const periods = Math.max(0, Math.floor((now.getTime() - startTime) / twoDays));
-  let count = baseCount;
-  let seed = 90409;
-
-  for (let index = 0; index < periods; index += 1) {
-    seed = (seed * 1664525 + 1013904223) % 4294967296;
-    count += seed % 2 === 0 ? 1 : 2;
-  }
-
-  return count;
-}
-
 const legalContent = {
   privacy: {
     eyebrow: "Privacy",
@@ -516,8 +500,6 @@ function WaitlistModal({ isOpen, onClose, onOpenLegal }) {
 }
 
 function WaitlistCTA({ compact = false, onOpenWaitlist }) {
-  const waitlistCount = getPriorityWaitlistCount();
-
   function handleSubmit(event) {
     event.preventDefault();
     onOpenWaitlist();
@@ -555,7 +537,7 @@ function WaitlistCTA({ compact = false, onOpenWaitlist }) {
       <p className="mt-3 text-center text-xs font-bold text-slate-500 sm:text-left">
         Free to join • No spam • Priority access updates only
         <span className="hidden sm:inline"> • </span>
-        <span className="block sm:inline">Join {waitlistCount.toLocaleString()} students already on the waitlist</span>
+        <span className="block sm:inline">100+ students are already on the waitlist</span>
       </p>
     </div>
   );

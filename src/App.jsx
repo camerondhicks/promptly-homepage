@@ -290,25 +290,25 @@ function PrivacyDocument({ onClose, onOpenTerms }) {
       aria-modal="true"
       aria-labelledby="privacy-title"
     >
-      <article className="privacy-document relative mx-auto min-h-screen w-full max-w-[1280px] px-5 pb-16 pt-5 sm:px-9 sm:pb-20 sm:pt-7 lg:px-12">
+      <article className="privacy-document relative mx-auto min-h-screen w-full max-w-[1180px] px-5 pb-16 pt-5 sm:px-9 sm:pb-20 sm:pt-7 lg:px-12">
         <button
           type="button"
           onClick={onClose}
           className="privacy-brand inline-flex items-center gap-4 rounded-2xl text-left transition hover:opacity-85"
-          aria-label="Back to Promptly"
+          aria-label="Return to Promptly"
         >
-          <span className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-lg shadow-black/25 sm:h-16 sm:w-16">
+          <span className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-lg shadow-black/25">
             <img src="/brand/promptly-logo-mark.png" alt="" className="h-full w-full object-cover" />
           </span>
-          <span className="text-2xl font-extrabold tracking-tight text-[#55adff] sm:text-[2rem]">Promptly</span>
+          <span className="text-2xl font-extrabold tracking-tight text-[#55adff] sm:text-[1.75rem]">Promptly</span>
         </button>
 
-        <header className="mt-12 sm:mt-14">
-          <h1 id="privacy-title" className="text-[3.15rem] font-black leading-none tracking-[-0.045em] text-white sm:text-[3.6rem]">
+        <header className="mt-12 sm:mt-12">
+          <h1 id="privacy-title" className="text-[3.15rem] font-black leading-none tracking-[-0.045em] text-white sm:text-[3.25rem]">
             Privacy
           </h1>
-          <p className="mt-6 text-xl font-medium text-slate-400 sm:text-2xl">Last updated 28 July 2026</p>
-          <p className="mt-14 max-w-[72rem] text-lg font-medium leading-8 text-slate-400 sm:mt-16 sm:text-[1.45rem] sm:leading-[1.65]">
+          <p className="mt-6 text-xl font-medium text-slate-400 sm:text-[1.25rem]">Last updated 28 July 2026</p>
+          <p className="mt-14 max-w-[68rem] text-lg font-medium leading-8 text-slate-400 sm:mt-14 sm:text-[1.2rem] sm:leading-[1.65]">
             Promptly tells students when an internship opens. To do that we need a little information about you. This
             page explains exactly what we keep, where it goes, and what we will never do with it — in plain English,
             not legal boilerplate.
@@ -316,8 +316,8 @@ function PrivacyDocument({ onClose, onOpenTerms }) {
         </header>
 
         <section className="privacy-card privacy-card-safe mt-10 rounded-[1.35rem] border px-6 py-6 sm:mt-11 sm:px-8 sm:py-7">
-          <h2 className="text-xl font-extrabold text-emerald-300 sm:text-2xl">Never leaves your device</h2>
-          <p className="mt-4 text-lg font-medium leading-8 text-slate-400 sm:text-[1.4rem] sm:leading-[1.65]">
+          <h2 className="text-xl font-extrabold text-emerald-300 sm:text-[1.35rem]">Never leaves your device</h2>
+          <p className="mt-4 text-lg font-medium leading-8 text-slate-400 sm:text-[1.2rem] sm:leading-[1.65]">
             Your <strong className="text-white">résumé text</strong>, your <strong className="text-white">profile photo</strong>, and your{" "}
             <strong className="text-white">application progress</strong> (applied, interview, offer) are stored only in
             your own browser. They are never uploaded to our servers. If you clear your browser data, they are gone —
@@ -369,8 +369,8 @@ function PrivacyDocument({ onClose, onOpenTerms }) {
         </PrivacySection>
 
         <section className="privacy-card privacy-card-never mt-12 rounded-[1.35rem] border px-6 py-6 sm:px-8 sm:py-7">
-          <h2 className="text-xl font-extrabold text-rose-400 sm:text-2xl">What we never do</h2>
-          <ul className="mt-4 list-disc space-y-3 pl-7 text-lg font-medium leading-8 text-slate-400 marker:text-slate-400 sm:text-[1.4rem] sm:leading-[1.55]">
+          <h2 className="text-xl font-extrabold text-rose-400 sm:text-[1.35rem]">What we never do</h2>
+          <ul className="mt-4 list-disc space-y-3 pl-7 text-lg font-medium leading-8 text-slate-400 marker:text-slate-400 sm:text-[1.2rem] sm:leading-[1.55]">
             <li>We never sell your data. Not to advertisers, not to data brokers, not to recruiters.</li>
             <li>We never apply to a job on your behalf. Every alert links to the employer's own posting.</li>
             <li>We never charge you to apply, and we will never ask you to pay an employer.</li>
@@ -403,12 +403,21 @@ function PrivacyDocument({ onClose, onOpenTerms }) {
           </p>
         </PrivacySection>
 
-        <footer className="mt-16 border-t border-white/15 pt-7 text-base font-medium text-slate-400 sm:text-xl">
-          <button type="button" onClick={onClose} className="transition hover:text-white">Back to Promptly</button>
-          <span aria-hidden="true"> · </span>
-          <button type="button" className="transition hover:text-white" onClick={onOpenTerms}>Terms</button>
-          <span aria-hidden="true"> · </span>
-          <a className="transition hover:text-white" href="mailto:help.promptly@gmail.com">help.promptly@gmail.com</a>
+        <footer className="mt-16 border-t border-white/15 pt-9 text-base font-medium text-slate-400">
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-center">
+            <button type="button" className="transition hover:text-white" onClick={onOpenTerms}>Terms</button>
+            <span aria-hidden="true"> · </span>
+            <a className="transition hover:text-white" href="mailto:help.promptly@gmail.com">help.promptly@gmail.com</a>
+          </div>
+          <div className="mt-8 flex justify-center">
+            <button
+              type="button"
+              onClick={onClose}
+              className="gradient-button min-w-[240px] rounded-2xl px-8 py-4 text-lg font-extrabold text-white transition duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-4 focus-visible:ring-offset-[#060818] sm:min-w-[290px]"
+            >
+              Return to Promptly
+            </button>
+          </div>
         </footer>
       </article>
     </div>
@@ -417,9 +426,9 @@ function PrivacyDocument({ onClose, onOpenTerms }) {
 
 function PrivacySection({ title, children }) {
   return (
-    <section className="privacy-section mt-12 sm:mt-14">
-      <h2 className="text-2xl font-black tracking-tight text-white sm:text-[1.9rem]">{title}</h2>
-      <div className="mt-4 space-y-3 text-lg font-medium leading-8 text-slate-400 sm:text-[1.4rem] sm:leading-[1.6]">
+    <section className="privacy-section mt-12 sm:mt-12">
+      <h2 className="text-2xl font-black tracking-tight text-white sm:text-[1.65rem]">{title}</h2>
+      <div className="mt-4 space-y-3 text-lg font-medium leading-8 text-slate-400 sm:text-[1.2rem] sm:leading-[1.6]">
         {children}
       </div>
     </section>

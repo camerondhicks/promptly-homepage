@@ -370,7 +370,7 @@ function PrivacyDocument({ onClose, onOpenTerms }) {
 
         <section className="privacy-card privacy-card-never mt-12 rounded-[1.35rem] border px-6 py-6 sm:px-8 sm:py-7">
           <h2 className="text-xl font-extrabold text-rose-400 sm:text-2xl">What we never do</h2>
-          <ul className="mt-4 space-y-3 pl-7 text-lg font-medium leading-8 text-slate-400 marker:text-slate-400 sm:text-[1.4rem] sm:leading-[1.55]">
+          <ul className="mt-4 list-disc space-y-3 pl-7 text-lg font-medium leading-8 text-slate-400 marker:text-slate-400 sm:text-[1.4rem] sm:leading-[1.55]">
             <li>We never sell your data. Not to advertisers, not to data brokers, not to recruiters.</li>
             <li>We never apply to a job on your behalf. Every alert links to the employer's own posting.</li>
             <li>We never charge you to apply, and we will never ask you to pay an employer.</li>

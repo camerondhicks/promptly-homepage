@@ -108,6 +108,58 @@ button {
   text-transform: uppercase;
 }
 
+.privacy-overlay {
+  background:
+    radial-gradient(circle at -8% 73%, rgba(45, 124, 196, 0.22), transparent 33%),
+    radial-gradient(circle at 105% 16%, rgba(91, 56, 194, 0.33), transparent 42%),
+    linear-gradient(120deg, #050816 0%, #080b1a 52%, #060818 100%);
+}
+
+.privacy-document::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(90deg, rgba(35, 87, 145, 0.08), transparent 28%, rgba(93, 64, 188, 0.08));
+}
+
+.privacy-card {
+  background: linear-gradient(105deg, rgba(28, 36, 50, 0.84), rgba(36, 40, 64, 0.74));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.privacy-card-safe {
+  border-color: rgba(80, 206, 161, 0.52);
+  background: linear-gradient(105deg, rgba(26, 37, 48, 0.88), rgba(62, 55, 116, 0.68));
+}
+
+.privacy-card-never {
+  border-color: rgba(225, 72, 104, 0.45);
+}
+
+.privacy-section ul {
+  margin: 1.25rem 0;
+  padding-left: 1.85rem;
+  list-style: disc;
+}
+
+.privacy-section li + li {
+  margin-top: 0.65rem;
+}
+
+.privacy-section strong,
+.privacy-card strong {
+  color: #f8fafc;
+  font-weight: 800;
+}
+
+@media (max-width: 639px) {
+  .privacy-section ul {
+    padding-left: 1.35rem;
+  }
+}
+
 .dashboard-perspective {
   transform: perspective(1400px) rotateX(7deg) rotateY(-12deg) rotateZ(1deg);
   transform-origin: center;

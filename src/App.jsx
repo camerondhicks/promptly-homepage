@@ -233,8 +233,12 @@ function Navigation({ onOpenWaitlist }) {
   );
 }
 
-function LegalModal({ view, onClose }) {
+function LegalModal({ view, onClose, onOpenTerms }) {
   if (!view) return null;
+
+  if (view === "privacy") {
+    return <PrivacyDocument onClose={onClose} onOpenTerms={onOpenTerms} />;
+  }
 
   const content = legalContent[view];
 
@@ -275,6 +279,150 @@ function LegalModal({ view, onClose }) {
         </button>
       </div>
     </div>
+  );
+}
+
+function PrivacyDocument({ onClose, onOpenTerms }) {
+  return (
+    <div
+      className="privacy-overlay fixed inset-0 z-[110] overflow-y-auto bg-[#050817]"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="privacy-title"
+    >
+      <article className="privacy-document relative mx-auto min-h-screen w-full max-w-[1280px] px-5 pb-16 pt-5 sm:px-9 sm:pb-20 sm:pt-7 lg:px-12">
+        <button
+          type="button"
+          onClick={onClose}
+          className="privacy-brand inline-flex items-center gap-4 rounded-2xl text-left transition hover:opacity-85"
+          aria-label="Back to Promptly"
+        >
+          <span className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-lg shadow-black/25 sm:h-16 sm:w-16">
+            <img src="/brand/promptly-logo-mark.png" alt="" className="h-full w-full object-cover" />
+          </span>
+          <span className="text-2xl font-extrabold tracking-tight text-[#55adff] sm:text-[2rem]">Promptly</span>
+        </button>
+
+        <header className="mt-12 sm:mt-14">
+          <h1 id="privacy-title" className="text-[3.15rem] font-black leading-none tracking-[-0.045em] text-white sm:text-[3.6rem]">
+            Privacy
+          </h1>
+          <p className="mt-6 text-xl font-medium text-slate-400 sm:text-2xl">Last updated 28 July 2026</p>
+          <p className="mt-14 max-w-[72rem] text-lg font-medium leading-8 text-slate-400 sm:mt-16 sm:text-[1.45rem] sm:leading-[1.65]">
+            Promptly tells students when an internship opens. To do that we need a little information about you. This
+            page explains exactly what we keep, where it goes, and what we will never do with it — in plain English,
+            not legal boilerplate.
+          </p>
+        </header>
+
+        <section className="privacy-card privacy-card-safe mt-10 rounded-[1.35rem] border px-6 py-6 sm:mt-11 sm:px-8 sm:py-7">
+          <h2 className="text-xl font-extrabold text-emerald-300 sm:text-2xl">Never leaves your device</h2>
+          <p className="mt-4 text-lg font-medium leading-8 text-slate-400 sm:text-[1.4rem] sm:leading-[1.65]">
+            Your <strong className="text-white">résumé text</strong>, your <strong className="text-white">profile photo</strong>, and your{" "}
+            <strong className="text-white">application progress</strong> (applied, interview, offer) are stored only in
+            your own browser. They are never uploaded to our servers. If you clear your browser data, they are gone —
+            we have no copy.
+          </p>
+        </section>
+
+        <PrivacySection title="What we store on our servers">
+          <p>When you set up alerts, we save the details needed to match and reach you:</p>
+          <ul>
+            <li>Your name and email address</li>
+            <li>School, graduation year, and major</li>
+            <li>Location preference, and whether you are open to remote or relocating</li>
+            <li>Interests and the alert fields you pick</li>
+            <li>Alerts you save and companies you choose to watch</li>
+            <li>Your notification preferences, and — if you turn on phone alerts — the push subscription your browser generates</li>
+          </ul>
+          <p>
+            That is the whole list. We do not ask for and do not want your government ID, Social Security number, bank
+            details, or passwords for any other service.
+          </p>
+        </PrivacySection>
+
+        <PrivacySection title="Who processes it">
+          <p>We keep the number of companies touching your data as small as we can:</p>
+          <ul>
+            <li><strong>Vercel</strong> — hosts the app</li>
+            <li><strong>Upstash</strong> — stores your alert profile</li>
+            <li><strong>Resend</strong> — delivers your alert emails</li>
+            <li><strong>Apple, Google, or Mozilla push services</strong> — deliver phone notifications, but only if you turn them on</li>
+          </ul>
+        </PrivacySection>
+
+        <PrivacySection title="Analytics">
+          <p>
+            We count basic things — how many people opened the app today, how many alerts were clicked — so we know what
+            is working. This is first-party only: the counts live in our own database, tied to a random session number,
+            not to your name or email. <strong>There are no advertising cookies, no tracking pixels, and no ad networks anywhere in Promptly.</strong>
+          </p>
+          <p>
+            Company logos are served from our own servers. We deliberately do not use a third-party logo or favicon
+            service, because that would tell another company which employers you are looking at.
+          </p>
+          <p>
+            We also record anonymous outcomes — that a student at a given school reached a given stage at a given
+            company. This carries no name and no email, and it exists so we can eventually show students how their peers
+            are doing.
+          </p>
+        </PrivacySection>
+
+        <section className="privacy-card privacy-card-never mt-12 rounded-[1.35rem] border px-6 py-6 sm:px-8 sm:py-7">
+          <h2 className="text-xl font-extrabold text-rose-400 sm:text-2xl">What we never do</h2>
+          <ul className="mt-4 space-y-3 pl-7 text-lg font-medium leading-8 text-slate-400 marker:text-slate-400 sm:text-[1.4rem] sm:leading-[1.55]">
+            <li>We never sell your data. Not to advertisers, not to data brokers, not to recruiters.</li>
+            <li>We never apply to a job on your behalf. Every alert links to the employer's own posting.</li>
+            <li>We never charge you to apply, and we will never ask you to pay an employer.</li>
+            <li>We never post anything anywhere as you.</li>
+          </ul>
+        </section>
+
+        <PrivacySection title="Deleting everything">
+          <p>
+            Open <strong>Profile → Settings → Delete My Data</strong> in the app. That removes your stored profile, your
+            saved alerts, your watched companies, and your notification subscription. It cannot be undone, and we do not
+            keep a shadow copy. You can also email us and we will do it for you.
+          </p>
+        </PrivacySection>
+
+        <PrivacySection title="Students under 18">
+          <p>
+            Promptly is built for college students and is not directed at children under 13. If you believe a child under
+            13 has given us information, email us and we will delete it.
+          </p>
+        </PrivacySection>
+
+        <PrivacySection title="Questions">
+          <p>
+            A real person reads this inbox:{" "}
+            <a className="text-[#4ba9ff] transition hover:text-sky-300" href="mailto:help.promptly@gmail.com">
+              help.promptly@gmail.com
+            </a>
+            . If something here is unclear or looks wrong, tell us and we will fix the page.
+          </p>
+        </PrivacySection>
+
+        <footer className="mt-16 border-t border-white/15 pt-7 text-base font-medium text-slate-400 sm:text-xl">
+          <button type="button" onClick={onClose} className="transition hover:text-white">Back to Promptly</button>
+          <span aria-hidden="true"> · </span>
+          <button type="button" className="transition hover:text-white" onClick={onOpenTerms}>Terms</button>
+          <span aria-hidden="true"> · </span>
+          <a className="transition hover:text-white" href="mailto:help.promptly@gmail.com">help.promptly@gmail.com</a>
+        </footer>
+      </article>
+    </div>
+  );
+}
+
+function PrivacySection({ title, children }) {
+  return (
+    <section className="privacy-section mt-12 sm:mt-14">
+      <h2 className="text-2xl font-black tracking-tight text-white sm:text-[1.9rem]">{title}</h2>
+      <div className="mt-4 space-y-3 text-lg font-medium leading-8 text-slate-400 sm:text-[1.4rem] sm:leading-[1.6]">
+        {children}
+      </div>
+    </section>
   );
 }
 
@@ -1131,7 +1279,11 @@ function App() {
         onClose={() => setIsWaitlistOpen(false)}
         onOpenLegal={setLegalView}
       />
-      <LegalModal view={legalView} onClose={() => setLegalView(null)} />
+      <LegalModal
+        view={legalView}
+        onClose={() => setLegalView(null)}
+        onOpenTerms={() => setLegalView("terms")}
+      />
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
       <Analytics />
       <SpeedInsights />

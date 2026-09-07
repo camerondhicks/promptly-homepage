@@ -170,27 +170,6 @@ const waitlistInitialState = {
 
 const revealStyle = (index = 0) => ({ "--reveal-delay": `${index * 90}ms` });
 
-const legalContent = {
-  privacy: {
-    eyebrow: "Privacy",
-    title: "Privacy at Promptly",
-    body: [
-      "Promptly will collect waitlist information, including names and email addresses, so we can manage early access, send product updates, and contact students about the pre-launch program.",
-      "We will not sell your contact information or share it with outside advertisers or unrelated third parties. Waitlist information will stay private inside Promptly's waitlist workflow and will only be used for launch communications, early access, and direct support.",
-      "You will be able to unsubscribe from Promptly updates at any time by contacting us.",
-    ],
-  },
-  terms: {
-    eyebrow: "Terms",
-    title: "Pre-Launch Terms",
-    body: [
-      "Promptly is currently pre-launch, so joining the waitlist does not guarantee immediate access or availability on a specific date.",
-      "Early access invitations, features, and supported opportunity sources may change as the product is developed.",
-      "By joining the waitlist, you agree that Promptly may use your submitted contact information to communicate with you about early access, product updates, and launch-related announcements.",
-    ],
-  },
-};
-
 function Logo() {
   return (
     <a href="#top" className="group flex items-center" aria-label="Promptly home">
@@ -230,208 +209,6 @@ function Navigation({ onOpenWaitlist }) {
         </button>
       </nav>
     </header>
-  );
-}
-
-function LegalModal({ view, onClose, onOpenTerms }) {
-  if (!view) return null;
-
-  if (view === "privacy") {
-    return <PrivacyDocument onClose={onClose} onOpenTerms={onOpenTerms} />;
-  }
-
-  const content = legalContent[view];
-
-  return (
-    <div
-      className="fixed inset-0 z-[110] flex items-center justify-center bg-black/70 px-4 py-6 backdrop-blur-xl"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="legal-title"
-    >
-      <div className="relative w-full max-w-2xl rounded-[2rem] border border-white/12 bg-[#101a27] p-6 shadow-2xl shadow-black/50 sm:p-8">
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute right-5 top-5 rounded-full p-2 text-slate-400 transition hover:bg-white/8 hover:text-white"
-          aria-label={`Close ${content.eyebrow}`}
-        >
-          <X className="h-5 w-5" />
-        </button>
-
-        <p className="section-kicker">{content.eyebrow}</p>
-        <h2 id="legal-title" className="mt-4 text-3xl font-black tracking-tight text-white">
-          {content.title}
-        </h2>
-        <div className="mt-6 space-y-4">
-          {content.body.map((paragraph) => (
-            <p key={paragraph} className="text-sm font-medium leading-7 text-slate-300 sm:text-base">
-              {paragraph}
-            </p>
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={onClose}
-          className="gradient-button mt-8 rounded-2xl px-6 py-3 text-sm font-black text-white transition hover:-translate-y-0.5"
-        >
-          Done
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function PrivacyDocument({ onClose, onOpenTerms }) {
-  return (
-    <div
-      className="privacy-overlay fixed inset-0 z-[110] overflow-y-auto bg-[#050817]"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="privacy-title"
-    >
-      <article className="privacy-document relative mx-auto min-h-screen w-full max-w-[1180px] px-5 pb-16 pt-5 sm:px-9 sm:pb-20 sm:pt-7 lg:px-12">
-        <button
-          type="button"
-          onClick={onClose}
-          className="privacy-brand inline-flex items-center gap-4 rounded-2xl text-left transition hover:opacity-85"
-          aria-label="Return to Promptly"
-        >
-          <span className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-lg shadow-black/25">
-            <img src="/brand/promptly-logo-mark.png" alt="" className="h-full w-full object-cover" />
-          </span>
-          <span className="text-2xl font-extrabold tracking-tight text-[#55adff] sm:text-[1.75rem]">Promptly</span>
-        </button>
-
-        <header className="mt-12 sm:mt-12">
-          <h1 id="privacy-title" className="text-[3.15rem] font-black leading-none tracking-[-0.045em] text-white sm:text-[3.25rem]">
-            Privacy
-          </h1>
-          <p className="mt-6 text-xl font-medium text-slate-400 sm:text-[1.25rem]">Last updated 28 July 2026</p>
-          <p className="mt-14 max-w-[68rem] text-lg font-medium leading-8 text-slate-400 sm:mt-14 sm:text-[1.2rem] sm:leading-[1.65]">
-            Promptly tells students when an internship opens. To do that we need a little information about you. This
-            page explains exactly what we keep, where it goes, and what we will never do with it — in plain English,
-            not legal boilerplate.
-          </p>
-        </header>
-
-        <section className="privacy-card privacy-card-safe mt-10 rounded-[1.35rem] border px-6 py-6 sm:mt-11 sm:px-8 sm:py-7">
-          <h2 className="text-xl font-extrabold text-emerald-300 sm:text-[1.35rem]">Never leaves your device</h2>
-          <p className="mt-4 text-lg font-medium leading-8 text-slate-400 sm:text-[1.2rem] sm:leading-[1.65]">
-            Your <strong className="text-white">résumé text</strong>, your <strong className="text-white">profile photo</strong>, and your{" "}
-            <strong className="text-white">application progress</strong> (applied, interview, offer) are stored only in
-            your own browser. They are never uploaded to our servers. If you clear your browser data, they are gone —
-            we have no copy.
-          </p>
-        </section>
-
-        <PrivacySection title="What we store on our servers">
-          <p>When you set up alerts, we save the details needed to match and reach you:</p>
-          <ul>
-            <li>Your name and email address</li>
-            <li>School, graduation year, and major</li>
-            <li>Location preference, and whether you are open to remote or relocating</li>
-            <li>Interests and the alert fields you pick</li>
-            <li>Alerts you save and companies you choose to watch</li>
-            <li>Your notification preferences, and — if you turn on phone alerts — the push subscription your browser generates</li>
-          </ul>
-          <p>
-            That is the whole list. We do not ask for and do not want your government ID, Social Security number, bank
-            details, or passwords for any other service.
-          </p>
-        </PrivacySection>
-
-        <PrivacySection title="Who processes it">
-          <p>We keep the number of companies touching your data as small as we can:</p>
-          <ul>
-            <li><strong>Vercel</strong> — hosts the app</li>
-            <li><strong>Upstash</strong> — stores your alert profile</li>
-            <li><strong>Resend</strong> — delivers your alert emails</li>
-            <li><strong>Apple, Google, or Mozilla push services</strong> — deliver phone notifications, but only if you turn them on</li>
-          </ul>
-        </PrivacySection>
-
-        <PrivacySection title="Analytics">
-          <p>
-            We count basic things — how many people opened the app today, how many alerts were clicked — so we know what
-            is working. This is first-party only: the counts live in our own database, tied to a random session number,
-            not to your name or email. <strong>There are no advertising cookies, no tracking pixels, and no ad networks anywhere in Promptly.</strong>
-          </p>
-          <p>
-            Company logos are served from our own servers. We deliberately do not use a third-party logo or favicon
-            service, because that would tell another company which employers you are looking at.
-          </p>
-          <p>
-            We also record anonymous outcomes — that a student at a given school reached a given stage at a given
-            company. This carries no name and no email, and it exists so we can eventually show students how their peers
-            are doing.
-          </p>
-        </PrivacySection>
-
-        <section className="privacy-card privacy-card-never mt-12 rounded-[1.35rem] border px-6 py-6 sm:px-8 sm:py-7">
-          <h2 className="text-xl font-extrabold text-rose-400 sm:text-[1.35rem]">What we never do</h2>
-          <ul className="mt-4 list-disc space-y-3 pl-7 text-lg font-medium leading-8 text-slate-400 marker:text-slate-400 sm:text-[1.2rem] sm:leading-[1.55]">
-            <li>We never sell your data. Not to advertisers, not to data brokers, not to recruiters.</li>
-            <li>We never apply to a job on your behalf. Every alert links to the employer's own posting.</li>
-            <li>We never charge you to apply, and we will never ask you to pay an employer.</li>
-            <li>We never post anything anywhere as you.</li>
-          </ul>
-        </section>
-
-        <PrivacySection title="Deleting everything">
-          <p>
-            Open <strong>Profile → Settings → Delete My Data</strong> in the app. That removes your stored profile, your
-            saved alerts, your watched companies, and your notification subscription. It cannot be undone, and we do not
-            keep a shadow copy. You can also email us and we will do it for you.
-          </p>
-        </PrivacySection>
-
-        <PrivacySection title="Students under 18">
-          <p>
-            Promptly is built for college students and is not directed at children under 13. If you believe a child under
-            13 has given us information, email us and we will delete it.
-          </p>
-        </PrivacySection>
-
-        <PrivacySection title="Questions">
-          <p>
-            A real person reads this inbox:{" "}
-            <a className="text-[#4ba9ff] transition hover:text-sky-300" href="mailto:help.promptly@gmail.com">
-              help.promptly@gmail.com
-            </a>
-            . If something here is unclear or looks wrong, tell us and we will fix the page.
-          </p>
-        </PrivacySection>
-
-        <footer className="mt-16 border-t border-white/15 pt-9 text-base font-medium text-slate-400">
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-center">
-            <button type="button" className="transition hover:text-white" onClick={onOpenTerms}>Terms</button>
-            <span aria-hidden="true"> · </span>
-            <a className="transition hover:text-white" href="mailto:help.promptly@gmail.com">help.promptly@gmail.com</a>
-          </div>
-          <div className="mt-8 flex justify-center">
-            <button
-              type="button"
-              onClick={onClose}
-              className="gradient-button min-w-[240px] rounded-2xl px-8 py-4 text-lg font-extrabold text-white transition duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-4 focus-visible:ring-offset-[#060818] sm:min-w-[290px]"
-            >
-              Return to Promptly
-            </button>
-          </div>
-        </footer>
-      </article>
-    </div>
-  );
-}
-
-function PrivacySection({ title, children }) {
-  return (
-    <section className="privacy-section mt-12 sm:mt-12">
-      <h2 className="text-2xl font-black tracking-tight text-white sm:text-[1.65rem]">{title}</h2>
-      <div className="mt-4 space-y-3 text-lg font-medium leading-8 text-slate-400 sm:text-[1.2rem] sm:leading-[1.6]">
-        {children}
-      </div>
-    </section>
   );
 }
 
@@ -496,7 +273,7 @@ function ContactModal({ isOpen, onClose }) {
   );
 }
 
-function WaitlistModal({ isOpen, onClose, onOpenLegal }) {
+function WaitlistModal({ isOpen, onClose }) {
   const [form, setForm] = useState(waitlistInitialState);
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
@@ -631,21 +408,19 @@ function WaitlistModal({ isOpen, onClose, onOpenLegal }) {
               </button>
               <p className="text-center text-xs font-medium leading-5 text-slate-500">
                 We will use your information for early access only. Read our{" "}
-                <button
-                  type="button"
-                  onClick={() => onOpenLegal("privacy")}
+                <a
+                  href="https://app.joinpromptly.co/privacy"
                   className="font-bold text-slate-300 transition hover:text-white"
                 >
                   Privacy
-                </button>{" "}
+                </a>{" "}
                 and{" "}
-                <button
-                  type="button"
-                  onClick={() => onOpenLegal("terms")}
+                <a
+                  href="https://app.joinpromptly.co/terms"
                   className="font-bold text-slate-300 transition hover:text-white"
                 >
                   Terms
-                </button>
+                </a>
                 .
               </p>
             </form>
@@ -1193,7 +968,7 @@ function FAQ() {
   );
 }
 
-function Footer({ onOpenWaitlist, onOpenLegal, onOpenContact }) {
+function Footer({ onOpenWaitlist, onOpenContact }) {
   return (
     <footer className="px-5 py-12 sm:px-8">
       <div className="mx-auto max-w-7xl">
@@ -1217,12 +992,12 @@ function Footer({ onOpenWaitlist, onOpenLegal, onOpenContact }) {
                 <button className="transition hover:text-white" type="button" onClick={onOpenContact}>
                   Contact
                 </button>
-                <button className="transition hover:text-white" type="button" onClick={() => onOpenLegal("privacy")}>
+                <a className="transition hover:text-white" href="https://app.joinpromptly.co/privacy">
                   Privacy
-                </button>
-                <button className="transition hover:text-white" type="button" onClick={() => onOpenLegal("terms")}>
+                </a>
+                <a className="transition hover:text-white" href="https://app.joinpromptly.co/terms">
                   Terms
-                </button>
+                </a>
               </div>
             </div>
             <div>
@@ -1241,7 +1016,6 @@ function Footer({ onOpenWaitlist, onOpenLegal, onOpenContact }) {
 
 function App() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
-  const [legalView, setLegalView] = useState(null);
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   useEffect(() => {
@@ -1280,18 +1054,11 @@ function App() {
       <FAQ />
       <Footer
         onOpenWaitlist={() => setIsWaitlistOpen(true)}
-        onOpenLegal={setLegalView}
         onOpenContact={() => setIsContactOpen(true)}
       />
       <WaitlistModal
         isOpen={isWaitlistOpen}
         onClose={() => setIsWaitlistOpen(false)}
-        onOpenLegal={setLegalView}
-      />
-      <LegalModal
-        view={legalView}
-        onClose={() => setLegalView(null)}
-        onOpenTerms={() => setLegalView("terms")}
       />
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
       <Analytics />

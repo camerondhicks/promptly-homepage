@@ -205,7 +205,7 @@ function Navigation({ onOpenWaitlist }) {
           onClick={onOpenWaitlist}
           className="gradient-button rounded-2xl px-4 py-2.5 text-sm font-extrabold text-white transition duration-300 hover:-translate-y-0.5 sm:px-5"
         >
-          Join the Waitlist
+          Join the beta
         </button>
       </nav>
     </header>
@@ -335,7 +335,7 @@ function WaitlistModal({ isOpen, onClose }) {
               You're on the list.
             </h2>
             <p className="mt-4 text-base font-medium leading-7 text-slate-300">
-              Thank you for taking part in the pre-launch program with Promptly. We'll reach out as early access opens.
+              Thank you for taking part in the pre-launch program with Promptly. Check your email for updates.
             </p>
             <button
               type="button"
@@ -348,10 +348,10 @@ function WaitlistModal({ isOpen, onClose }) {
         ) : (
           <>
             <h2 id="waitlist-title" className="text-3xl font-black tracking-tight text-white">
-              Join the waitlist
+              Join the beta
             </h2>
             <p className="mt-4 text-base font-medium leading-7 text-slate-400">
-              Get priority access when Promptly begins rolling out to students.
+              Get priority access to Promptly's pre-launch process
             </p>
 
             <form onSubmit={handleSubmit} className="mt-8 space-y-4">
@@ -403,7 +403,7 @@ function WaitlistModal({ isOpen, onClose }) {
                 disabled={status === "submitting"}
                 className="gradient-button flex w-full items-center justify-center gap-2 rounded-2xl px-5 py-4 text-sm font-black text-white transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
               >
-                {status === "submitting" ? "Joining..." : "Join waitlist"}
+                {status === "submitting" ? "Joining..." : "Join the beta"}
                 <ArrowRight className="h-4 w-4" />
               </button>
               <p className="text-center text-xs font-medium leading-5 text-slate-500">
@@ -454,7 +454,7 @@ function WaitlistCTA({ compact = false, onOpenWaitlist }) {
             type="email"
             readOnly
             onFocus={onOpenWaitlist}
-            placeholder="Join the priority waitlist"
+            placeholder="Join the beta launch"
             className="w-full bg-transparent text-sm font-medium text-white outline-none placeholder:text-slate-500 sm:text-base"
           />
         </div>
@@ -977,7 +977,7 @@ function Footer({ onOpenWaitlist, onOpenContact }) {
             <div>
               <Logo />
               <p className="mt-4 max-w-xl text-sm font-medium leading-7 text-slate-300">
-                Join the waitlist to get instant internship and job alerts when Promptly launches.
+                Join the beta to get instant internship and job alerts when Promptly launches.
               </p>
               <div className="mt-5 flex flex-wrap gap-4 text-sm font-bold text-slate-400">
                 <a className="transition hover:text-white" href="#how-it-works">
@@ -1068,3 +1068,4 @@ function App() {
 }
 
 export default App;
+

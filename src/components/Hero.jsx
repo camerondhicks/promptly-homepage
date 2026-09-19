@@ -40,7 +40,7 @@ export default function Hero() {
             <span className="sr-only">{hero.headlineTyped}</span>
             <span className="block" aria-hidden="true">
               <span className="gradient-text">{typed}</span>
-              <span className={`type-caret ${done ? "" : "opacity-100"}`} />
+              <span className={`type-caret ${done ? "" : "type-caret--typing"}`} />
             </span>
           </h1>
 
@@ -75,7 +75,9 @@ export default function Hero() {
         </div>
 
         {/* ---------------- Product ---------------- */}
-        <div className="relative z-10 mt-4 lg:mt-0">
+        {/* Bottom padding on small screens leaves room for the alert
+            card, which is anchored below the phone. */}
+        <div className="relative z-10 mt-4 pb-28 lg:mt-0 lg:pb-0">
           <ProductPreview annotations={hero.annotations} />
 
           {/* Alert demo: tucked against the composition on desktop,

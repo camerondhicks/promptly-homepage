@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 
 /**
  * The Promptly bolt, drawn as a path so it stays razor sharp at any
  * size and can be recoloured. Each instance mints its own gradient id
  * because SVG gradient ids are global to the document.
  */
-let markSeed = 0;
-
 export function PromptlyMark({ className = "h-8 w-8", title }) {
-  const [id] = useState(() => `promptly-bolt-${(markSeed += 1)}`);
+  // useId() contains colons, which are awkward inside url(#…) references,
+  // so they're stripped before the id reaches the gradient.
+  const id = `bolt-${useId().replace(/:/g, "")}`;
 
   return (
     <svg

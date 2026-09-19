@@ -85,7 +85,7 @@ export default function InteractiveFeed() {
             <ul
               id="feed-panel"
               role="tabpanel"
-              aria-label={`${active} opportunities`}
+              aria-labelledby={`feed-tab-${filters.indexOf(active)}`}
               className="mt-3 space-y-2"
             >
               {rows.map((row, index) => (

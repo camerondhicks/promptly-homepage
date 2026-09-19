@@ -342,6 +342,14 @@ img {
   animation: caret-blink 1.05s steps(1, end) infinite;
 }
 
+/* Solid while characters are still landing — a caret that blinks
+   mid-word reads as a glitch rather than as typing. It starts
+   blinking once the line finishes. */
+.type-caret--typing {
+  animation: none;
+  opacity: 1;
+}
+
 @keyframes caret-blink {
   0%,
   49% {

@@ -388,9 +388,10 @@ export const footer = {
     {
       title: "Social",
       items: [
+        { label: "Instagram", href: links.instagram },
+        { label: "TikTok", href: links.tiktok },
         { label: "LinkedIn", href: links.linkedin },
         { label: "X / Twitter", href: links.x },
-        { label: "Instagram", href: links.instagram },
       ],
     },
   ],

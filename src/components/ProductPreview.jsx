@@ -279,10 +279,12 @@ export default function ProductPreview({ annotations }) {
 
   return (
     <div ref={parallaxRef} className="relative">
-      {/* ---------- Small screens: phone only ---------- */}
-      <div className="relative mx-auto w-full max-w-[280px] lg:hidden">
+      {/* ---------- Small screens: phone only ----------
+          The badge sits above the phone here, because below it would
+          collide with the alert card the hero anchors under it. */}
+      <div className="relative mx-auto w-full max-w-[280px] pt-7 lg:hidden">
+        <PreviewBadge className="absolute left-1/2 top-0 -translate-x-1/2" />
         <PhoneMockup className="float-slow" />
-        <PreviewBadge className="absolute -bottom-3 left-1/2 -translate-x-1/2" />
       </div>
 
       {/* ---------- Large screens: full composition ---------- */}

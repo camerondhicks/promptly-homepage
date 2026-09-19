@@ -51,19 +51,12 @@ export function useRevealObserver() {
       { threshold: 0.12, rootMargin: "0px 0px -6% 0px" },
     );
 
+    // Every `.reveal` element is present at mount — none are mounted
+    // conditionally — so a single pass is enough and the page avoids
+    // a MutationObserver running over the whole body.
     items().forEach((el) => observer.observe(el));
 
-    // Sections that mount later (filtered lists, expanded panels)
-    // still need picking up.
-    const mutation = new MutationObserver(() => {
-      items().forEach((el) => observer.observe(el));
-    });
-    mutation.observe(document.body, { childList: true, subtree: true });
-
-    return () => {
-      observer.disconnect();
-      mutation.disconnect();
-    };
+    return () => observer.disconnect();
   }, []);
 }
 

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Bookmark, Search } from "lucide-react";
+import { ExternalLink, Search, Star } from "lucide-react";
 import { CompanyMark, PreviewBadge, Pill } from "./Brand.jsx";
 import { useReducedMotion } from "../hooks/useMotion.js";
 import { interactiveFeed } from "../content/site.js";
 
-const { filters, listings, pill, headline, body } = interactiveFeed;
+const { filters, listings, pill, headline, body, searchPlaceholder } = interactiveFeed;
 
 export default function InteractiveFeed() {
   const [active, setActive] = useState(filters[0]);
@@ -37,23 +37,25 @@ export default function InteractiveFeed() {
           </div>
 
           <div className="card reveal relative overflow-hidden p-4 sm:p-5">
-            <PreviewBadge className="absolute right-4 top-4 z-10" />
+            <div className="mb-3 flex justify-end">
+              <PreviewBadge />
+            </div>
 
             {/* Search affordance — visual only */}
             <div
-              className="flex items-center gap-2 rounded-xl border border-line bg-tint px-3 py-2.5 pr-32"
+              className="flex items-center gap-2 rounded-xl border border-line bg-tint px-3 py-2.5"
               aria-hidden="true"
             >
               <Search className="h-4 w-4 shrink-0 text-muted" />
               <span className="truncate text-[0.82rem] font-medium text-muted">
-                Search companies, roles, or keywords
+                {searchPlaceholder}
               </span>
             </div>
 
             {/* Filters */}
             <div
               role="tablist"
-              aria-label="Filter demo opportunities by industry"
+              aria-label="Filter demo opportunities by track"
               onKeyDown={onKeyDown}
               className="snap-row mt-3 flex gap-2 overflow-x-auto pb-1"
             >
@@ -82,38 +84,59 @@ export default function InteractiveFeed() {
             </div>
 
             {/* Listings */}
-            <ul
+            <div
               id="feed-panel"
               role="tabpanel"
               aria-labelledby={`feed-tab-${filters.indexOf(active)}`}
-              className="mt-3 space-y-2"
+              className="mt-3"
             >
+              <ul className="space-y-2">
               {rows.map((row, index) => (
-                <li
-                  // Keying on the filter restarts the entrance animation
-                  // each time the visitor switches industry.
-                  key={`${active}-${row.company}`}
-                  className={`flex items-center gap-3 rounded-xl border border-line bg-white p-3 ${
-                    reduced ? "" : "alert-enter"
-                  }`}
-                  style={reduced ? undefined : { animationDelay: `${index * 60}ms` }}
-                >
-                  <CompanyMark company={row.company} domain={row.domain} size={38} />
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[0.9rem] font-black text-ink">
-                      {row.company}
+                  <li
+                    // Keying on the filter restarts the entrance animation
+                    // each time the visitor switches track.
+                    key={`${active}-${row.company}`}
+                    className={`flex items-center gap-3 rounded-xl border border-line bg-white p-3 ${
+                      reduced ? "" : "alert-enter"
+                    }`}
+                    style={reduced ? undefined : { animationDelay: `${index * 60}ms` }}
+                  >
+                    <CompanyMark company={row.company} mark={row.mark} size={38} />
+
+                    <span className="min-w-0 flex-1">
+                      <span className="inline-block rounded-md bg-brand-violet/10 px-1.5 py-0.5 text-[0.62rem] font-black uppercase tracking-[0.08em] text-brand-ink">
+                        {active}
+                      </span>
+                      <span className="mt-1 block truncate text-[0.9rem] font-black text-ink">
+                        {row.company}
+                      </span>
+                      <span className="block truncate text-[0.8rem] font-medium text-muted">
+                        {row.role} · {row.term}
+                      </span>
+                      <span className="mt-0.5 block truncate text-[0.72rem] font-semibold text-body">
+                        {row.closes}
+                      </span>
+                      <span className="block truncate text-[0.72rem] font-semibold text-body">
+                        Student fit: {row.fit}
+                      </span>
+                      <span className="block truncate text-[0.72rem] font-semibold text-muted">
+                        Verified source: {row.source}
+                      </span>
                     </span>
-                    <span className="block truncate text-[0.8rem] font-medium text-muted">
-                      {row.role}
+
+                    {/* The app's row actions: save, and open the posting. */}
+                    <span className="flex shrink-0 items-center gap-1.5" aria-hidden="true">
+                      <span className="grid h-7 w-7 place-items-center rounded-lg border border-line bg-white">
+                        <Star className="h-3.5 w-3.5 text-line-strong" />
+                      </span>
+                      <span className="grid h-7 w-7 place-items-center rounded-lg bg-brand-violet">
+                        <ExternalLink className="h-3.5 w-3.5 text-white" />
+                      </span>
                     </span>
-                  </span>
-                  <span className="hidden shrink-0 rounded-full border border-line bg-tint px-2.5 py-1 text-[0.68rem] font-bold text-muted sm:inline">
-                    {row.term}
-                  </span>
-                  <Bookmark className="h-4 w-4 shrink-0 text-line-strong" aria-hidden="true" />
-                </li>
-              ))}
-            </ul>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             <p className="mt-3 text-[0.72rem] font-medium text-muted">
               Illustrative roles shown to demonstrate the interface — not live listings.

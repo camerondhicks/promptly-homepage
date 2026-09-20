@@ -18,34 +18,23 @@
  * ========================================================== */
 
 export const promptlyStats = {
-  companiesTracked: 366,
-  liveOpportunities: 1133,
-  companiesHiring: 196,
-  topSchool: "UCLA",
+  companiesTracked: 690,
+  liveOpportunities: 1988,
+  companiesHiring: 354,
 };
 
-/** The four cards in the "Early impact" section. */
+/*
+ * The "Early impact" cards.
+ *
+ * These are rounded DOWN from the real figures above and shown with a
+ * "+", so the number stays true as the product grows. Rounding up would
+ * claim more than Promptly actually tracks — 690 is not "700+".
+ * The exact figures still drive the product preview's own stat block.
+ */
 export const impactMetrics = [
-  {
-    value: promptlyStats.companiesTracked,
-    label: "Companies tracked",
-    format: "number",
-  },
-  {
-    value: promptlyStats.liveOpportunities,
-    label: "Live opportunities",
-    format: "number",
-  },
-  {
-    value: promptlyStats.companiesHiring,
-    label: "Companies hiring",
-    format: "number",
-  },
-  {
-    value: promptlyStats.topSchool,
-    label: "Largest student usage",
-    format: "text",
-  },
+  { value: 650, label: "Companies tracked", format: "number", suffix: "+" },
+  { value: 1900, label: "Live opportunities", format: "number", suffix: "+" },
+  { value: 350, label: "Companies hiring", format: "number", suffix: "+" },
 ];
 
 /* ============================================================
@@ -65,10 +54,11 @@ export const links = {
   x: "",
 };
 
+/* Order matches the order the sections appear on the page. */
 export const navLinks = [
-  { label: "How It Works", href: "#how-it-works" },
   { label: "Features", href: "#features" },
   { label: "For Students", href: "#for-students" },
+  { label: "How It Works", href: "#how-it-works" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -101,7 +91,41 @@ export const hero = {
 
 export const universityUsage = {
   eyebrow: "Used by students across top universities",
-  schools: ["UCLA"],
+  /*
+   * Taken from signup data — every name here is a school Promptly has
+   * real student users at. Order is roughly by number of students, then
+   * alphabetical. Names are shortened only where the short form is
+   * unambiguous. Add or remove a line and the marquee updates itself.
+   */
+  schools: [
+    "Trinity College",
+    "UCLA",
+    "NYU",
+    "University of Pennsylvania",
+    "Dartmouth College",
+    "UNC Chapel Hill",
+    "Washington University in St. Louis",
+    "UT Austin",
+    "University of Illinois Urbana-Champaign",
+    "University of Wisconsin–Madison",
+    "University of Washington",
+    "University of Florida",
+    "Howard University",
+    "Fisk University",
+    "Swarthmore College",
+    "Wellesley College",
+    "Drexel University",
+    "Lehigh University",
+    "University of Rochester",
+    "Baruch College",
+    "Bentley University",
+    "NJIT",
+    "San José State University",
+    "UT Dallas",
+    "UT San Antonio",
+    "Texas State University",
+    "University of Central Oklahoma",
+  ],
 };
 
 /* ============================================================
@@ -222,28 +246,129 @@ export const recruitingCycles = {
 export const interactiveFeed = {
   pill: "Product preview",
   headline: ["Find what matters", "to you."],
-  body: "Pick an industry and the feed reshapes around it — the same way it does once your own filters are set.",
-  filters: ["Technology", "Finance", "Healthcare", "Consulting"],
+  body: "Pick a track and the feed reshapes around it — the same way it does once your own filters are set.",
+  searchPlaceholder: "Search Google, Goldman, McKinsey, Amazon...",
+  filters: ["Finance", "Technology", "Healthcare", "Education"],
+  /*
+   * Row anatomy mirrors the Student Alert Feed in the app: track tag,
+   * company, role, how it closes, the student-fit line and the source.
+   */
   listings: {
-    Technology: [
-      { company: "Google", role: "Software Engineering Intern", domain: "google.com", term: "Summer 2027" },
-      { company: "Microsoft", role: "Product Manager Intern", domain: "microsoft.com", term: "Summer 2027" },
-      { company: "Spotify", role: "Data Analyst Intern", domain: "spotify.com", term: "Summer 2027" },
-    ],
     Finance: [
-      { company: "J.P. Morgan", role: "Investment Banking Intern", domain: "jpmorgan.com", term: "Summer 2027" },
-      { company: "Goldman Sachs", role: "Summer Analyst", domain: "goldmansachs.com", term: "Summer 2027" },
-      { company: "BlackRock", role: "Markets Summer Analyst", domain: "blackrock.com", term: "Summer 2027" },
+      {
+        company: "BlackRock",
+        mark: "BLK",
+        role: "2027 Summer Internship Program — AMERS",
+        term: "Summer 2027",
+        closes: "Rolling · Opened Jan 14, 2026",
+        fit: "Strong match · Finance + Summer 2027",
+        source: "BlackRock — 2027 Summer Internship AMERS",
+      },
+      {
+        company: "D.E. Shaw",
+        mark: "DES",
+        role: "Fundamental Research Analyst Intern",
+        term: "Summer 2027",
+        closes: "Rolling · Opened Jan 8, 2026",
+        fit: "Strong match · Finance + Summer 2027",
+        source: "D.E. Shaw — Fundamental Research Analyst Intern 2027",
+      },
+      {
+        company: "Citadel",
+        mark: "CITA",
+        role: "Quantitative Researcher PhD Intern (US)",
+        term: "Internship",
+        closes: "Live · Closes see posting",
+        fit: "Strong match · Finance + Internship",
+        source: "Citadel — verified live posting",
+      },
+    ],
+    Technology: [
+      {
+        company: "Two Sigma",
+        mark: "2S",
+        role: "Software Engineering Intern",
+        term: "Summer 2027",
+        closes: "Rolling · Opened Jan 21, 2026",
+        fit: "Strong match · Technology + Summer 2027",
+        source: "Two Sigma Careers",
+      },
+      {
+        company: "Dropbox",
+        mark: "DBX",
+        role: "Product Engineering Intern",
+        term: "Summer 2027",
+        closes: "Live · Closes see posting",
+        fit: "Strong match · Technology + Summer 2027",
+        source: "Dropbox Careers",
+      },
+      {
+        company: "Hudson River Trading",
+        mark: "HRT",
+        role: "Algorithm Engineering Intern",
+        term: "Summer 2027",
+        closes: "Rolling · Opened Jan 5, 2026",
+        fit: "Strong match · Technology + Summer 2027",
+        source: "HRT Careers",
+      },
     ],
     Healthcare: [
-      { company: "Pfizer", role: "Clinical Research Intern", domain: "pfizer.com", term: "Summer 2027" },
-      { company: "Johnson & Johnson", role: "Biomedical Engineering Intern", domain: "jnj.com", term: "Summer 2027" },
-      { company: "Genentech", role: "Research Summer Scholar", domain: "gene.com", term: "Summer 2027" },
+      {
+        company: "Nuveen",
+        mark: "NUV",
+        role: "Healthcare Investment Intern",
+        term: "Summer 2027",
+        closes: "Live · Closes see posting",
+        fit: "Strong match · Healthcare + Summer 2027",
+        source: "Nuveen Careers",
+      },
+      {
+        company: "MetLife",
+        mark: "MET",
+        role: "Actuarial Summer Intern",
+        term: "Summer 2027",
+        closes: "Rolling · Opened Jan 12, 2026",
+        fit: "Strong match · Healthcare + Summer 2027",
+        source: "MetLife Careers",
+      },
+      {
+        company: "Mastercard",
+        mark: "MA",
+        role: "Health Analytics Intern",
+        term: "Summer 2027",
+        closes: "Live · Closes see posting",
+        fit: "Strong match · Healthcare + Summer 2027",
+        source: "Mastercard Careers",
+      },
     ],
-    Consulting: [
-      { company: "McKinsey & Company", role: "Summer Business Analyst", domain: "mckinsey.com", term: "Summer 2027" },
-      { company: "Bain & Company", role: "Associate Consultant Intern", domain: "bain.com", term: "Summer 2027" },
-      { company: "Deloitte", role: "Strategy Summer Scholar", domain: "deloitte.com", term: "Summer 2027" },
+    Education: [
+      {
+        company: "Federal Reserve Board",
+        mark: "FRB",
+        role: "Research Assistant Program",
+        term: "Summer 2027",
+        closes: "Rolling · Opened Jan 3, 2026",
+        fit: "Strong match · Education + Summer 2027",
+        source: "Federal Reserve Board Careers",
+      },
+      {
+        company: "L'Oréal",
+        mark: "OR",
+        role: "Campus Programs Intern",
+        term: "Summer 2027",
+        closes: "Live · Closes see posting",
+        fit: "Strong match · Education + Summer 2027",
+        source: "L'Oréal Careers",
+      },
+      {
+        company: "Bain Capital",
+        mark: "BAIN",
+        role: "Student Programs Intern",
+        term: "Summer 2027",
+        closes: "Rolling · Opened Jan 19, 2026",
+        fit: "Strong match · Education + Summer 2027",
+        source: "Bain Capital Careers",
+      },
     ],
   },
 };
@@ -252,67 +377,102 @@ export const interactiveFeed = {
  * 9. HERO PRODUCT MOCKUP + LIVE ALERT DEMO
  *
  *    ⚠️  PRODUCT PREVIEW — illustrative only. Both surfaces are
- *    labelled "Preview" on screen.
+ *    labelled "Preview" on screen. The structure, wording and
+ *    navigation mirror app.joinpromptly.co so the page shows the
+ *    product people actually get.
  * ========================================================== */
 
 export const productPreview = {
   label: "Product preview",
+  eyebrow: "Student alert dashboard",
+
+  /** Left rail, same order as the app. */
+  nav: ["Home", "Openings", "Student Cycles", "Saved", "Alerts", "Profile"],
+
+  /* Phone shows the Openings feed — a list reads well in a narrow column. */
   phone: {
-    greeting: "Good morning",
-    subline: "12 new opportunities match your filters.",
-    tabs: ["All", "Technology", "Finance", "Healthcare"],
+    title: "Student Alert Feed",
+    searchPlaceholder: "Search Google, Goldman...",
+    tabs: ["All", "Finance", "Technology", "Healthcare"],
     rows: [
-      { company: "Google", role: "Product Management Intern", domain: "google.com" },
-      { company: "Goldman Sachs", role: "Summer Analyst", domain: "goldmansachs.com" },
-      { company: "Tesla", role: "Vehicle Software Intern", domain: "tesla.com" },
-      { company: "Nike", role: "Data Science Intern", domain: "nike.com" },
+      { company: "BlackRock", mark: "BLK", role: "2027 Summer Internship — AMERS", track: "Finance" },
+      { company: "D.E. Shaw", mark: "DES", role: "Fundamental Research Analyst", track: "Finance" },
+      { company: "Two Sigma", mark: "2S", role: "Software Engineering Intern", track: "Technology" },
+      { company: "Citadel", mark: "CITA", role: "Quantitative Researcher Intern", track: "Finance" },
     ],
+    nav: ["Home", "Openings", "Cycles", "Saved", "Alerts"],
   },
+
+  /* Dashboard shows the app's Home screen. */
   desktop: {
-    searchPlaceholder: "Search companies, roles, or keywords",
-    tabs: ["All", "Technology", "Finance", "Healthcare", "Consulting", "Saved"],
-    rows: [
-      { company: "Amazon", role: "Software Development Intern", domain: "amazon.com" },
-      { company: "Microsoft", role: "Product Manager Intern", domain: "microsoft.com" },
-      { company: "J.P. Morgan", role: "Investment Banking Intern", domain: "jpmorgan.com" },
-      { company: "Tesla", role: "Mechanical Engineering Intern", domain: "tesla.com" },
-      { company: "Spotify", role: "Data Analyst Intern", domain: "spotify.com" },
-    ],
-    activity: [
-      { value: "82", label: "New alerts this week" },
-      { value: "12", label: "Applications" },
-      { value: "6", label: "Saved opportunities" },
-    ],
-    industries: [
-      { name: "Technology", weight: 0.92 },
-      { name: "Finance", weight: 0.74 },
-      { name: "Healthcare", weight: 0.58 },
-      { name: "Consulting", weight: 0.44 },
-      { name: "Consumer", weight: 0.31 },
-    ],
+    greeting: "Good evening",
+    profile: {
+      label: "Alert profile",
+      title: "Tracking Finance, Technology, Healthcare.",
+      meta: "Trinity College · Class of 2028 · Neuroscience",
+    },
+    pulse: {
+      label: "Alert pulse",
+      title: "New matches since your last review.",
+      rows: [
+        { company: "BlackRock", role: "2027 Summer Internship Program — AMERS" },
+        { company: "D.E. Shaw", role: "Fundamental Research Analyst Intern" },
+        { company: "Thoma Bravo", role: "Internship roles" },
+      ],
+    },
+    status: {
+      label: "System status",
+      line: "Always watching, student-focused openings.",
+    },
+    openNow: {
+      tag: "Open now",
+      company: "BlackRock",
+      mark: "BLK",
+      headline: "2027 Summer Internship Program — AMERS is open.",
+      meta: "Finance student alert · Deadline rolling.",
+      cta: "View alert",
+    },
   },
 };
 
 /** Cards that slide into the hero, one after another. */
 export const liveAlertDemo = [
-  { company: "Google", role: "Associate Product Manager", domain: "google.com" },
-  { company: "Goldman Sachs", role: "Summer Analyst", domain: "goldmansachs.com" },
-  { company: "Tesla", role: "Vehicle Software Intern", domain: "tesla.com" },
+  { company: "BlackRock", mark: "BLK", role: "2027 Summer Internship — AMERS" },
+  { company: "Citadel", mark: "CITA", role: "Quantitative Researcher Intern" },
+  { company: "Two Sigma", mark: "2S", role: "Software Engineering Intern" },
 ];
-
 /* ============================================================
  * 10. FOUNDERS NOTE
  * ========================================================== */
 
 export const foundersNote = {
   pill: "Founders note",
-  headline: "We built Promptly because timing kept mattering.",
+  headline: ["Getting in isn't only about", "qualifications. It's about timing."],
   paragraphs: [
-    "We kept seeing the same problem: great opportunities were opening, but students were finding them days later. Promptly started with a simple idea — make it easier to know when the right opportunity goes live.",
-    "Instead of checking dozens of career pages every day, students can keep the opportunities and companies they care about in one place.",
+    "Promptly was founded in response to the immense pressure of securing competitive roles at top-tier institutions. It was built on a frustrating truth: getting a foot in the door is not just about qualifications. A large part is almost entirely about timing.",
+    "Highly qualified candidates miss career-defining internships simply because they discover the posting a few days too late. Promptly exists to stop that window from closing before applicants even know the opportunity is there, bridging the vital gap between being an exceptional candidate and having perfect timing.",
   ],
   signoff: "Built by students, for students.",
-  founders: ["Cameron Hicks", "Tremayne Russell", "Marley Stewart"],
+  founders: [
+    {
+      name: "Cameron Hicks",
+      initials: "CH",
+      role: "Co-founder",
+      linkedin: "https://www.linkedin.com/in/camerondhicks/",
+    },
+    {
+      name: "Marley Stewart",
+      initials: "MS",
+      role: "Co-founder",
+      linkedin: "https://www.linkedin.com/in/marleystewart/",
+    },
+    {
+      name: "Tremayne Russell",
+      initials: "TR",
+      role: "Co-founder",
+      linkedin: "https://www.linkedin.com/in/tremaynerussell/",
+    },
+  ],
 };
 
 /* ============================================================
@@ -344,6 +504,11 @@ export const faqs = [
     question: "What are Recruiting Cycles?",
     answer:
       "Different industries recruit at different times of year, and the timing is rarely obvious from the outside. Recruiting Cycles shows you when fields and companies typically begin hiring, so you can prepare before the window opens instead of after.",
+  },
+  {
+    question: "Do I need to download an app?",
+    answer:
+      "No. Promptly runs in your browser, and on iPhone you can add it to your home screen so it opens like any other app. A native App Store version is on the way.",
   },
   {
     question: "Is Promptly free?",

@@ -12,6 +12,9 @@ export default function FeatureGrid() {
   return (
     <section id="features" className="px-5 py-16 sm:px-8 sm:py-20" aria-label="Features">
       <div className="mx-auto max-w-[1240px]">
+        {/* The section is deliberately headline-free, but the cards' h3s
+            still need an h2 above them for the document outline. */}
+        <h2 className="sr-only">Features</h2>
         <div className="reveal rounded-[28px] border border-line bg-tint p-2.5 sm:p-3">
           <ul className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
             {features.map((feature, index) => {

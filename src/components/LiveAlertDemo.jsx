@@ -42,7 +42,7 @@ export default function LiveAlertDemo({ className = "" }) {
         </div>
 
         <div className="mt-2.5 flex items-center gap-2.5">
-          <CompanyMark company={alert.company} domain={alert.domain} size={34} />
+          <CompanyMark company={alert.company} mark={alert.mark} size={34} />
           <span className="min-w-0">
             <span className="block truncate text-[0.82rem] font-black leading-tight text-ink">
               {alert.company}

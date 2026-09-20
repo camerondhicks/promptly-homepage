@@ -1,7 +1,6 @@
 import { ArrowRight, Check } from "lucide-react";
 import { Pill } from "./Brand.jsx";
 import ProductPreview from "./ProductPreview.jsx";
-import LiveAlertDemo from "./LiveAlertDemo.jsx";
 import { useTypewriter } from "../hooks/useMotion.js";
 import { hero, links } from "../content/site.js";
 
@@ -21,7 +20,7 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      <div className="mx-auto grid max-w-[1240px] items-center gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.02fr)] lg:gap-8">
+      <div className="mx-auto grid max-w-[1240px] items-center gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)] lg:gap-8">
         {/* ---------------- Copy ---------------- */}
         <div className="relative z-10">
           <Pill>{hero.pill}</Pill>
@@ -75,14 +74,10 @@ export default function Hero() {
         </div>
 
         {/* ---------------- Product ---------------- */}
-        {/* Bottom padding on small screens leaves room for the alert
-            card, which is anchored below the phone. */}
-        <div className="relative z-10 mt-4 pb-28 lg:mt-0 lg:pb-0">
+        {/* The alert card now lives in "Early impact"; the padding left
+            here is just room for the annotation under the devices. */}
+        <div className="relative z-10 mx-auto mt-4 w-full max-w-[420px] pb-6 lg:mt-0 lg:max-w-none lg:pb-16 xl:pb-52">
           <ProductPreview annotations={hero.annotations} />
-
-          {/* Alert demo: tucked against the composition on desktop,
-              centred under the phone on smaller screens. */}
-          <LiveAlertDemo className="absolute -bottom-10 left-1/2 z-30 -translate-x-1/2 lg:-bottom-4 lg:left-auto lg:right-[-10px] lg:translate-x-0" />
         </div>
       </div>
     </section>

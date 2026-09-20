@@ -12,20 +12,19 @@
     />
     <link rel="canonical" href="https://joinpromptly.co/" />
 
-    <!-- Tab icon: the Promptly bolt. SVG for modern browsers, ICO/PNG as fallback. -->
+    <!--
+      Tab icon: the same bitmaps app.joinpromptly.co serves, so the two
+      tabs are identical. No SVG variant on purpose — modern browsers
+      prefer SVG, and a hand-drawn one would drift from the app's.
+    -->
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Fonts: preconnect so the stylesheet and the font file don't
-         pay for two separate connection handshakes. -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..900;1,14..32,400..900&display=swap"
-    />
+    <!-- Inter is self-hosted and bundled; see src/main.jsx. -->
 
     <!-- Social cards -->
     <meta property="og:type" content="website" />

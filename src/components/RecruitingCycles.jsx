@@ -51,7 +51,7 @@ export default function RecruitingCycles() {
         <div className="card reveal mt-10 overflow-hidden p-5 sm:p-7">
           {/* Month scale */}
           <div
-            className="grid gap-1 pl-0 sm:pl-[140px]"
+            className="grid gap-1 pl-[13px] pr-[13px] sm:pl-[153px]"
             style={{ gridTemplateColumns: `repeat(${months.length}, minmax(0, 1fr))` }}
             aria-hidden="true"
           >
@@ -87,7 +87,7 @@ export default function RecruitingCycles() {
                       {industry.name}
                     </span>
 
-                    <span className="relative block h-7 flex-1 rounded-lg bg-tint-2 ring-1 ring-line">
+                    <span className="relative block h-7 w-full shrink-0 rounded-lg bg-tint-2 ring-1 ring-line sm:w-auto sm:flex-1">
                       {segments(industry.start, industry.end).map((segment, segmentIndex) => (
                         <span
                           key={segmentIndex}

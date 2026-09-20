@@ -64,6 +64,27 @@ export function useRevealObserver() {
  * Fires once when the returned ref enters the viewport.
  * Used to kick off the metric count-up and timeline progress.
  */
+/**
+ * The page is client-rendered, so on a direct hit to /#faq the browser has
+ * no such element to jump to while parsing the HTML and the visitor lands
+ * at the top instead. Scroll once the sections exist.
+ */
+export function useHashLanding() {
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!id) return undefined;
+
+    const frame = requestAnimationFrame(() => {
+      const target = document.getElementById(decodeURIComponent(id));
+      // "instant" so a shared link opens where it points rather than
+      // scrolling the whole page past the visitor.
+      target?.scrollIntoView({ behavior: "instant", block: "start" });
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, []);
+}
+
 export function useInView(options) {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);

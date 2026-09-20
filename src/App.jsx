@@ -14,7 +14,7 @@ import FAQ from "./components/FAQ.jsx";
 import FinalCTA from "./components/FinalCTA.jsx";
 import Footer from "./components/Footer.jsx";
 
-import { useRevealObserver } from "./hooks/useMotion.js";
+import { useHashLanding, useRevealObserver } from "./hooks/useMotion.js";
 
 /**
  * Section order tells the story in sequence:
@@ -23,6 +23,7 @@ import { useRevealObserver } from "./hooks/useMotion.js";
  */
 export default function App() {
   useRevealObserver();
+  useHashLanding();
 
   return (
     <>

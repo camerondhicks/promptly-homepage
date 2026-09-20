@@ -1,5 +1,6 @@
-import { Pill, CompanyMark } from "./Brand.jsx";
+import { Pill } from "./Brand.jsx";
 import { useCountUp, useInView } from "../hooks/useMotion.js";
+import LiveAlertDemo from "./LiveAlertDemo.jsx";
 import { impactMetrics } from "../content/site.js";
 
 /* Subtle network behind the section — opportunities being found. */
@@ -20,7 +21,7 @@ function DiscoveryNetwork() {
       className="absolute inset-0 h-full w-full"
       fill="none"
       aria-hidden="true"
-      preserveAspectRatio="xMidYMid slice"
+      preserveAspectRatio="xMidYMid meet"
     >
       <g stroke="rgba(11,13,23,0.10)" strokeWidth="1">
         <path d="M18 116 74 52 162 92 238 44" />
@@ -63,6 +64,7 @@ function MetricCard({ metric, active, index }) {
       <p className="text-[clamp(1.75rem,4.6vw,2.25rem)] font-black leading-none tracking-[-0.035em]">
         <span className="gradient-text">
           {isNumber ? counted.toLocaleString("en-US") : metric.value}
+          {metric.suffix ?? ""}
         </span>
       </p>
       <p className="mt-2.5 text-[0.875rem] font-semibold text-muted">{metric.label}</p>
@@ -94,29 +96,16 @@ export default function ImpactMetrics() {
             </p>
           </div>
 
-          {/* Network + the opportunity being discovered */}
-          <div className="relative hidden min-h-[220px] lg:block" aria-hidden="true">
+          {/* Network + the opportunity being discovered. The card
+              rotates through alerts, so the section shows the product
+              doing its job rather than describing it. */}
+          <div className="relative min-h-[200px]">
             <DiscoveryNetwork />
-            <div className="absolute right-0 top-8 w-[260px] rounded-2xl border border-line bg-white p-3.5 shadow-[0_2px_4px_rgba(11,13,23,0.03),0_20px_44px_-20px_rgba(30,32,68,0.3)]">
-              <div className="flex items-center gap-2.5">
-                <CompanyMark company="Google" domain="google.com" size={34} />
-                <span className="min-w-0">
-                  <span className="block truncate text-[0.82rem] font-black leading-tight text-ink">
-                    Google
-                  </span>
-                  <span className="block truncate text-[0.72rem] font-medium leading-tight text-muted">
-                    Product Management Internship
-                  </span>
-                </span>
-              </div>
-              <p className="mt-2.5 border-t border-line pt-2.5 text-[0.68rem] font-bold text-brand-ink">
-                Recently opened
-              </p>
-            </div>
+            <LiveAlertDemo className="relative mx-auto w-[262px] lg:absolute lg:right-0 lg:top-8 lg:mx-0" />
           </div>
         </div>
 
-        <ul className="mt-10 grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
+        <ul className="mt-10 grid gap-2.5 sm:grid-cols-3 sm:gap-3">
           {impactMetrics.map((metric, index) => (
             <MetricCard key={metric.label} metric={metric} active={inView} index={index} />
           ))}

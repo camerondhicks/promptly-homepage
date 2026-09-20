@@ -121,7 +121,7 @@ export default function HowItWorks() {
 
                     <p
                       className={`text-[0.68rem] font-black uppercase tracking-[0.14em] transition-colors duration-500 ${
-                        active ? "text-brand-ink" : "text-muted/70"
+                        active ? "text-brand-ink" : "text-muted"
                       }`}
                     >
                       Step {index + 1}

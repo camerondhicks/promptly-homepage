@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useId } from "react";
 
 /**
  * The Promptly bolt, drawn as a path so it stays razor sharp at any
@@ -48,7 +48,7 @@ export function Logo({ className = "", markClass = "h-8 w-8", textClass = "text-
     <span className={`inline-flex items-center gap-2 ${className}`}>
       <PromptlyMark className={markClass} />
       <span
-        className={`font-black italic uppercase leading-none tracking-[-0.03em] text-ink ${textClass}`}
+        className={`font-black italic uppercase leading-none tracking-[-0.03em] text-brand-wordmark ${textClass}`}
       >
         Promptly
       </span>
@@ -57,36 +57,43 @@ export function Logo({ className = "", markClass = "h-8 w-8", textClass = "text-
 }
 
 /**
- * A company's favicon, with a lettered fallback when the request
- * fails or is blocked. Dimensions are fixed so the surrounding
- * mockups never shift as logos load.
+ * A company tile: a coloured square with a short monogram, exactly as
+ * the app draws them. Keeping it local means no third-party favicon
+ * request per logo and nothing to shift as images load.
  */
-export function CompanyMark({ company, domain, size = 36, eager = false, className = "" }) {
-  const [failed, setFailed] = useState(false);
-  const initial = company?.trim().charAt(0).toUpperCase() ?? "?";
+const MARK_TONES = ["#111827", "#14532d", "#1e3a5f", "#166534", "#312e45"];
+
+function monogram(company) {
+  const words = company.trim().split(/[\s.&]+/).filter(Boolean);
+  if (words.length === 1) return words[0].slice(0, 3).toUpperCase();
+  return words
+    .slice(0, 3)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+}
+
+export function CompanyMark({ company, mark, size = 36, className = "" }) {
+  const label = mark ?? monogram(company ?? "?");
+  // Stable per company, so a given logo is always the same colour.
+  const tone =
+    MARK_TONES[
+      [...(company ?? "")].reduce((sum, char) => sum + char.charCodeAt(0), 0) % MARK_TONES.length
+    ];
 
   return (
     <span
-      className={`grid shrink-0 place-items-center overflow-hidden rounded-[10px] border border-line bg-white ${className}`}
-      style={{ width: size, height: size }}
+      className={`grid shrink-0 place-items-center overflow-hidden rounded-[10px] font-black leading-none text-white ${className}`}
+      style={{
+        width: size,
+        height: size,
+        background: tone,
+        fontSize: Math.max(7, Math.round(size * (label.length > 3 ? 0.26 : 0.32))),
+        letterSpacing: "-0.02em",
+      }}
       aria-hidden="true"
     >
-      {failed || !domain ? (
-        <span className="text-[0.7rem] font-black text-muted">{initial}</span>
-      ) : (
-        <img
-          src={`https://www.google.com/s2/favicons?domain=${domain}&sz=128`}
-          alt=""
-          width={size - 12}
-          height={size - 12}
-          loading={eager ? "eager" : "lazy"}
-          decoding="async"
-          referrerPolicy="no-referrer"
-          onError={() => setFailed(true)}
-          className="object-contain"
-          style={{ width: size - 12, height: size - 12 }}
-        />
-      )}
+      {label}
     </span>
   );
 }
@@ -98,7 +105,7 @@ export function CompanyMark({ company, domain, size = 36, eager = false, classNa
 export function PreviewBadge({ className = "" }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border border-line bg-white/85 px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-[0.1em] text-muted backdrop-blur ${className}`}
+      className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-line bg-white/85 px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-[0.1em] text-muted backdrop-blur ${className}`}
     >
       <span className="h-1.5 w-1.5 rounded-full bg-muted/60" />
       Product preview
@@ -106,12 +113,7 @@ export function PreviewBadge({ className = "" }) {
   );
 }
 
-/** Section eyebrow pill, e.g. ● EARLY IMPACT */
+/** Section eyebrow chip, e.g. EARLY IMPACT — same shape the app uses. */
 export function Pill({ children, className = "" }) {
-  return (
-    <span className={`pill ${className}`}>
-      <span className="pill-dot" />
-      {children}
-    </span>
-  );
+  return <span className={`pill ${className}`}>{children}</span>;
 }

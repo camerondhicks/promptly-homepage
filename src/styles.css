@@ -1,5 +1,6 @@
 /*
- * Inter is loaded from index.html with <link rel="preconnect"> rather
+ * Inter is self-hosted via @fontsource-variable/inter, imported in
+ * main.jsx, rather
  * than an @import here: a CSS @import is discovered late and blocks
  * rendering while it resolves.
  */
@@ -32,8 +33,10 @@
   --color-brand-violet: #6d4aff;
   --color-brand-purple: #a855f7;
   --color-brand-ink: #4b32d4;
+  /* The purple the app sets its PROMPTLY wordmark in. */
+  --color-brand-wordmark: #7c3aed;
 
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 :root {
@@ -197,26 +200,29 @@ img {
   transform: translateY(0);
 }
 
+/*
+ * Section eyebrow. Matches the chips the app uses above each panel
+ * ("ALERT PROFILE", "OPEN NOW") — soft purple block, no outline, no dot.
+ */
 .pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.85rem;
-  border-radius: 999px;
-  border: 1px solid rgba(109, 74, 255, 0.2);
-  background: rgba(109, 74, 255, 0.06);
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.5rem;
+  background: rgba(109, 74, 255, 0.1);
   color: var(--color-brand-ink);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.pill-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: var(--brand-gradient);
+/* Hardware mockups sit on their own shadow rather than a card border. */
+.device-shadow {
+  box-shadow:
+    0 2px 4px rgba(11, 13, 23, 0.04),
+    0 18px 40px -16px rgba(30, 32, 68, 0.3),
+    0 64px 110px -55px rgba(30, 32, 68, 0.4);
 }
 
 /* Card surface used across the page. */
@@ -524,6 +530,39 @@ img {
    Everything decorative stops; nothing becomes unreadable.
    ========================================================== */
 
+
+/* ==========================================================
+   UNIVERSITY MARQUEE
+   Two identical copies of the list; the track slides by exactly
+   one copy's width and restarts, so the loop is seamless.
+   ========================================================== */
+
+@keyframes marquee-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+.marquee-track {
+  animation: marquee-drift 70s linear infinite;
+  will-change: transform;
+}
+
+/* Let someone stop it to read a name. */
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -548,7 +587,8 @@ img {
 
   .float-slow,
   .float-slower,
-  .glow-drift {
+  .glow-drift,
+  .marquee-track {
     animation: none;
   }
 }

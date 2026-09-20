@@ -1,8 +1,13 @@
 # Promptly Landing Page
 
-Dark-mode React and Tailwind landing page for Promptly, a pre-launch web and mobile app that will send students instant push notifications when internships and job opportunities are published.
+The public marketing site for [Promptly](https://joinpromptly.co) — a live web and
+mobile app that alerts students when internships and early-career opportunities go
+live. Built with React, Vite and Tailwind CSS v4, deployed on Vercel.
 
-## Run Locally
+The product itself lives at [app.joinpromptly.co](https://app.joinpromptly.co) in a
+separate repository. Every call to action on this page routes there.
+
+## Run locally
 
 ```bash
 pnpm install
@@ -15,144 +20,78 @@ pnpm dev
 pnpm build
 ```
 
-## Waitlist Google Sheets Setup
+## Editing the page content
 
-The waitlist modal posts to `/api/waitlist`, which forwards submissions to a Google Apps Script webhook.
+**Almost every change you'll want to make is in one file: [`src/content/site.js`](src/content/site.js).**
 
-Add this environment variable in Vercel:
-
-```bash
-GOOGLE_SHEETS_WEBHOOK_URL=https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec
-```
-
-The Google Sheet should have columns for `submittedAt`, `firstName`, `lastName`, `email`, and `source`.
-
-Use this Apps Script for the sheet webhook. It saves the signup and sends a professional confirmation email:
+Metrics, copy, links, FAQ questions, recruiting cycles and the demo listings all
+live there, so you can update the page without touching a component. For example,
+to refresh the numbers in the "Early impact" section:
 
 ```js
-const WAITLIST_EMAIL_SUBJECT = "You're In! Welcome to the Promptly Priority Waitlist";
-
-function doPost(e) {
-  try {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    const data = JSON.parse(e.postData.contents || "{}");
-
-    const submittedAt = data.submittedAt || new Date().toISOString();
-    const firstName = String(data.firstName || "").trim();
-    const lastName = String(data.lastName || "").trim();
-    const email = String(data.email || "").trim();
-    const source = data.source || "Promptly landing page";
-
-    sheet.appendRow([
-      submittedAt,
-      firstName,
-      lastName,
-      email,
-      source,
-    ]);
-
-    sendWaitlistConfirmationEmail(firstName, email);
-
-    return jsonResponse({ ok: true });
-  } catch (error) {
-    return jsonResponse({ ok: false, error: String(error) });
-  }
-}
-
-function sendWaitlistConfirmationEmail(firstName, email) {
-  if (!email) return;
-
-  const displayName = firstName || "there";
-  const safeName = escapeHtml(displayName);
-
-  const plainBody = [
-    `Hi ${displayName},`,
-    "",
-    "Thanks for signing up!",
-    "",
-    "You're officially on our Priority Waitlist, which means you'll be among the first to hear about new updates, early access opportunities, and our official launch.",
-    "",
-    "We're working hard behind the scenes to build something we're genuinely excited to share, and we're glad you're joining us from the very beginning.",
-    "",
-    "As a member of the Priority Waitlist, you'll receive:",
-    "",
-    "- Early access before the public launch",
-    "- Product updates and development news",
-    "- Opportunities to provide feedback and help shape the platform",
-    "- Any exclusive launch announcements or perks we offer",
-    "",
-    "We appreciate your support and can't wait to share what we've been building. Thanks for believing in us from day one.",
-    "",
-    "See you soon,",
-    "",
-    "The Founding Team",
-    "Cameron Hicks",
-    "Tremayne Russell",
-    "Marley Stewart",
-  ].join("\n");
-
-  const htmlBody = `
-    <div style="margin:0;padding:0;background:#0f111a;font-family:Inter,Arial,sans-serif;color:#f8fbff;">
-      <div style="max-width:640px;margin:0 auto;padding:32px 20px;">
-        <div style="border:1px solid rgba(255,255,255,0.14);border-radius:24px;background:linear-gradient(135deg,#1c2030,#171927 55%,#221a42);padding:32px;">
-          <div style="font-size:13px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#9b83ff;margin-bottom:14px;">
-            Promptly Priority Waitlist
-          </div>
-          <h1 style="margin:0 0 20px;font-size:32px;line-height:1.1;color:#ffffff;">
-            You're in.
-          </h1>
-          <p style="margin:0 0 18px;font-size:16px;line-height:1.7;color:#dce3f2;">Hi ${safeName},</p>
-          <p style="margin:0 0 18px;font-size:16px;line-height:1.7;color:#dce3f2;">
-            Thanks for signing up! You're officially on our Priority Waitlist, which means you'll be among the first to hear about new updates, early access opportunities, and our official launch.
-          </p>
-          <p style="margin:0 0 22px;font-size:16px;line-height:1.7;color:#dce3f2;">
-            We're working hard behind the scenes to build something we're genuinely excited to share, and we're glad you're joining us from the very beginning.
-          </p>
-          <div style="margin:24px 0;padding:20px;border-radius:18px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);">
-            <p style="margin:0 0 12px;font-size:15px;font-weight:800;color:#ffffff;">As a member of the Priority Waitlist, you'll receive:</p>
-            <ul style="margin:0;padding-left:20px;color:#cfd7e6;font-size:15px;line-height:1.8;">
-              <li>Early access before the public launch</li>
-              <li>Product updates and development news</li>
-              <li>Opportunities to provide feedback and help shape the platform</li>
-              <li>Any exclusive launch announcements or perks we offer</li>
-            </ul>
-          </div>
-          <p style="margin:0 0 24px;font-size:16px;line-height:1.7;color:#dce3f2;">
-            We appreciate your support and can't wait to share what we've been building. Thanks for believing in us from day one.
-          </p>
-          <p style="margin:0;font-size:16px;line-height:1.7;color:#dce3f2;">
-            See you soon,<br><br>
-            <strong style="color:#ffffff;">The Founding Team</strong><br>
-            Cameron Hicks<br>
-            Tremayne Russell<br>
-            Marley Stewart
-          </p>
-        </div>
-      </div>
-    </div>
-  `;
-
-  GmailApp.sendEmail(email, WAITLIST_EMAIL_SUBJECT, plainBody, {
-    htmlBody,
-    name: "Promptly",
-    replyTo: "help.promptly@gmail.com",
-  });
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-function jsonResponse(payload) {
-  return ContentService
-    .createTextOutput(JSON.stringify(payload))
-    .setMimeType(ContentService.MimeType.JSON);
-}
+export const promptlyStats = {
+  companiesTracked: 366,
+  liveOpportunities: 1133,
+  companiesHiring: 196,
+  topSchool: "UCLA",
+};
 ```
 
-Deploy the script as a Web App from `help.promptly@gmail.com`, set access to `Anyone`, copy the `/exec` URL, and save it in Vercel as `GOOGLE_SHEETS_WEBHOOK_URL`. The first time the script runs, Google may ask you to authorize Gmail access.
+### Content rules
+
+A few things in that file are deliberately constrained, and it's worth keeping them
+that way:
+
+- **Universities** (`universityUsage.schools`) describe *student usage*, never an
+  endorsement or partnership. Only add a school you can verify has Promptly users.
+  With fewer than three schools the section renders as a single line rather than a
+  thin logo strip.
+- **Demo listings** (`interactiveFeed`, `productPreview`, `liveAlertDemo`) are
+  illustrative and are labelled "Product preview" on screen. They are not live
+  openings and should not be presented as such.
+- **Recruiting cycles** show approximate seasonal patterns, not specific employer
+  dates.
+
+## Structure
+
+```
+src/
+  content/site.js      all marketing copy, metrics and links
+  hooks/useMotion.js   scroll reveal, count-up, parallax, typewriter, carousel
+  components/          one file per page section
+  styles.css           design tokens, brand primitives, animation system
+  App.jsx              section order
+public/                favicons, manifest, OG image, brand assets
+```
+
+### Design system
+
+Tokens are defined in `styles.css` under `@theme`, which exposes them to Tailwind
+as utilities (`text-ink`, `bg-tint`, `border-line`, `from-brand-blue`, …). The
+brand gradient is a single `--brand-gradient` variable used by `.gradient-text`
+and `.btn-gradient`.
+
+### Animation
+
+Every animation is opacity, transform or scale, and all of them respect
+`prefers-reduced-motion` — both via the global block at the end of `styles.css`
+and via the `useReducedMotion()` hook for JS-driven motion (typewriter, count-up,
+alert carousel, pointer parallax). If you add motion, follow the same pattern.
+
+## Waitlist endpoint
+
+`api/waitlist.js` and `google-apps-script-waitlist-email-simple.gs` are left over
+from the pre-launch waitlist. **The landing page no longer calls them** — Promptly
+is live, so every CTA routes to the app's own signup instead. They're kept so the
+Google Sheet integration isn't lost, and can be deleted once you're sure nothing
+else depends on them.
+
+The `GOOGLE_SHEETS_WEBHOOK_URL` environment variable in Vercel is only used by
+that endpoint.
+
+## Unused assets
+
+`public/brand/promptly-logo-full.png` has a **white** wordmark baked into it, so it
+is invisible on the current light background. The logo is now drawn as live SVG in
+`src/components/Brand.jsx` instead. That file and `public/ui/student-alert-feed.png`
+are no longer referenced and can be removed.

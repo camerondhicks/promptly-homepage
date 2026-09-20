@@ -3,11 +3,61 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <title>Promptly | Find internships while they're still fresh</title>
     <meta
       name="description"
-      content="Promptly sends students instant notifications the second internships and job opportunities are published."
+      content="Promptly sends you alerts when internships and early-career opportunities go live, so you can find them while they're still fresh."
     />
-    <title>Promptly | Never Miss the Window</title>
+    <link rel="canonical" href="https://joinpromptly.co/" />
+
+    <!--
+      Tab icon: the same bitmaps app.joinpromptly.co serves, so the two
+      tabs are identical. No SVG variant on purpose — modern browsers
+      prefer SVG, and a hand-drawn one would drift from the app's.
+    -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Inter is self-hosted and bundled; see src/main.jsx. -->
+
+    <!-- Social cards -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Promptly" />
+    <meta property="og:url" content="https://joinpromptly.co/" />
+    <meta property="og:title" content="Promptly | Find internships while they're still fresh" />
+    <meta
+      property="og:description"
+      content="Promptly sends you alerts when internships and early-career opportunities go live, so you can find them while they're still fresh."
+    />
+    <meta property="og:image" content="https://joinpromptly.co/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Promptly | Find internships while they're still fresh" />
+    <meta
+      name="twitter:description"
+      content="Promptly sends you alerts when internships and early-career opportunities go live, so you can find them while they're still fresh."
+    />
+    <meta name="twitter:image" content="https://joinpromptly.co/og-image.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Promptly",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web, iOS, Android",
+        "url": "https://joinpromptly.co/",
+        "description": "Promptly sends students alerts when internships and early-career opportunities go live.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

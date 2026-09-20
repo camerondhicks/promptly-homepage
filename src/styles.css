@@ -1,201 +1,566 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+/*
+ * Inter is self-hosted via @fontsource-variable/inter, imported in
+ * main.jsx, rather
+ * than an @import here: a CSS @import is discovered late and blocks
+ * rendering while it resolves.
+ */
 @import "tailwindcss";
 
+/* ==========================================================
+   THEME TOKENS
+   Exposed to Tailwind as utilities: bg-ink, text-muted, etc.
+   ========================================================== */
+
+@theme {
+  /* Ink — near-black navy, not pure black */
+  --color-ink: #0b0d17;
+  --color-ink-soft: #232838;
+  --color-body: #444c63;
+  --color-muted: #5b6377;
+
+  /* Surfaces */
+  --color-surface: #ffffff;
+  --color-tint: #f7f8fc;
+  --color-tint-2: #f2f4fb;
+  --color-tint-3: #eef1fa;
+
+  /* Hairlines */
+  --color-line: rgba(11, 13, 23, 0.08);
+  --color-line-strong: rgba(11, 13, 23, 0.14);
+
+  /* Brand */
+  --color-brand-blue: #2563ff;
+  --color-brand-violet: #6d4aff;
+  --color-brand-purple: #a855f7;
+  --color-brand-ink: #4b32d4;
+  /* The purple the app sets its PROMPTLY wordmark in. */
+  --color-brand-wordmark: #7c3aed;
+
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
 :root {
-  color-scheme: dark;
-  background: #11131b;
-  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --brand-gradient: linear-gradient(100deg, #2563ff 0%, #6d4aff 52%, #a855f7 100%);
+  --brand-gradient-hover: linear-gradient(100deg, #1d55ec 0%, #5c39f5 52%, #9a3ff0 100%);
+  --radius-card: 20px;
+  --radius-xl: 28px;
+
+  color-scheme: light;
+  font-family: var(--font-sans);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  /* Stops long words / mockup strings from forcing horizontal scroll. */
+  min-width: 0;
+}
+
 html {
   scroll-behavior: smooth;
+  /* Sticky navbar is 72px; keeps anchored headings clear of it. */
+  scroll-padding-top: 96px;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  min-width: 320px;
-  min-height: 100vh;
   margin: 0;
-  background:
-    linear-gradient(135deg, rgba(85, 101, 255, 0.08), transparent 42%),
-    linear-gradient(225deg, rgba(123, 72, 255, 0.16), transparent 46%),
-    #11131b;
-  color: #f8fbff;
+  min-height: 100vh;
+  background: #ffffff;
+  color: var(--color-ink);
+  /* Belt-and-braces against any single element overflowing. */
+  overflow-x: clip;
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
+  color: inherit;
 }
 
 button {
   cursor: pointer;
 }
 
-.app-shell {
-  position: relative;
-  overflow: hidden;
+img {
+  max-width: 100%;
 }
 
-.app-shell::before {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  content: "";
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), transparent 72%);
+::selection {
+  background: rgba(109, 74, 255, 0.18);
 }
 
-.app-shell::after {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  content: "";
-  background:
-    linear-gradient(90deg, rgba(16, 19, 28, 0.96), rgba(16, 19, 28, 0.74) 52%, rgba(35, 28, 73, 0.58)),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 30%);
+/* ==========================================================
+   FOCUS
+   Visible for keyboards, invisible for mouse users.
+   ========================================================== */
+
+:focus {
+  outline: none;
 }
 
-.glass {
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.045));
-  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
-  backdrop-filter: blur(22px) saturate(145%);
+:focus-visible {
+  outline: 2px solid var(--color-brand-violet);
+  outline-offset: 3px;
+  border-radius: 8px;
 }
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 200;
+  translate: -50% -140%;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 14px 14px;
+  background: var(--color-ink);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: translate 180ms ease;
+}
+
+.skip-link:focus-visible {
+  translate: -50% 0;
+}
+
+/* ==========================================================
+   BRAND PRIMITIVES
+   ========================================================== */
 
 .gradient-text {
-  background: linear-gradient(100deg, #5db8ff 0%, #7864ff 44%, #b05cff 100%);
+  background: var(--brand-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  /* Descenders (p, y) get clipped without this. */
+  padding-bottom: 0.06em;
 }
 
-.gradient-button {
+.btn-gradient {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: linear-gradient(100deg, #4aa9ff, #744cff 52%, #a85dff);
-  box-shadow: 0 14px 34px rgba(97, 82, 255, 0.35);
+  background: var(--brand-gradient);
+  color: #fff;
+  box-shadow:
+    0 1px 2px rgba(11, 13, 23, 0.08),
+    0 10px 24px -8px rgba(76, 58, 224, 0.45);
+  transition:
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 180ms ease;
 }
 
-.gradient-button::before {
+.btn-gradient::before {
+  content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  content: "";
-  background: linear-gradient(100deg, #6ac9ff, #7d65ff 48%, #bf75ff);
+  background: var(--brand-gradient-hover);
   opacity: 0;
-  transition: opacity 220ms ease;
+  transition: opacity 200ms ease;
 }
 
-.gradient-button:hover::before {
+.btn-gradient:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 1px 2px rgba(11, 13, 23, 0.08),
+    0 16px 32px -10px rgba(76, 58, 224, 0.5);
+}
+
+.btn-gradient:hover::before {
   opacity: 1;
 }
 
-.section-kicker {
-  color: #8e75ff;
-  font-size: 0.78rem;
+.btn-gradient:active {
+  transform: translateY(0);
+}
+
+.btn-ghost {
+  background: #fff;
+  color: var(--color-ink);
+  border: 1px solid var(--color-line-strong);
+  box-shadow: 0 1px 2px rgba(11, 13, 23, 0.04);
+  transition:
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.btn-ghost:hover {
+  transform: translateY(-1px);
+  border-color: rgba(109, 74, 255, 0.35);
+  background: var(--color-tint);
+}
+
+.btn-ghost:active {
+  transform: translateY(0);
+}
+
+/*
+ * Section eyebrow. Matches the chips the app uses above each panel
+ * ("ALERT PROFILE", "OPEN NOW") — soft purple block, no outline, no dot.
+ */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.5rem;
+  background: rgba(109, 74, 255, 0.1);
+  color: var(--color-brand-ink);
+  font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.privacy-overlay {
-  background:
-    radial-gradient(circle at -8% 73%, rgba(45, 124, 196, 0.22), transparent 33%),
-    radial-gradient(circle at 105% 16%, rgba(91, 56, 194, 0.33), transparent 42%),
-    linear-gradient(120deg, #050816 0%, #080b1a 52%, #060818 100%);
+/* Hardware mockups sit on their own shadow rather than a card border. */
+.device-shadow {
+  box-shadow:
+    0 2px 4px rgba(11, 13, 23, 0.04),
+    0 18px 40px -16px rgba(30, 32, 68, 0.3),
+    0 64px 110px -55px rgba(30, 32, 68, 0.4);
 }
 
-.privacy-document::before {
+/* Card surface used across the page. */
+.card {
+  background: #fff;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  box-shadow: 0 1px 2px rgba(11, 13, 23, 0.04);
+}
+
+.card-lift {
+  transition:
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 240ms ease,
+    border-color 240ms ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-3px);
+  border-color: rgba(109, 74, 255, 0.28);
+  box-shadow:
+    0 1px 2px rgba(11, 13, 23, 0.04),
+    0 18px 40px -20px rgba(45, 40, 105, 0.32);
+}
+
+/* Floating product surfaces — softer, deeper shadow. */
+.float-panel {
+  background: #fff;
+  border: 1px solid var(--color-line);
+  box-shadow:
+    0 2px 4px rgba(11, 13, 23, 0.03),
+    0 12px 28px -12px rgba(30, 32, 68, 0.18),
+    0 48px 90px -40px rgba(30, 32, 68, 0.28);
+}
+
+/* ==========================================================
+   BACKGROUND TEXTURES
+   ========================================================== */
+
+/*
+ * Decorative layers sit at z-index 0, not -1: a negative index would
+ * paint them behind the opaque background of any tinted container
+ * they live in, making them invisible. Content above them is given
+ * `relative z-10`.
+ */
+.bg-grid {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
-  content: "";
-  background: linear-gradient(90deg, rgba(35, 87, 145, 0.08), transparent 28%, rgba(93, 64, 188, 0.08));
+  background-image:
+    linear-gradient(rgba(11, 13, 23, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 13, 23, 0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 0%, transparent 78%);
 }
 
-.privacy-card {
-  background: linear-gradient(105deg, rgba(28, 36, 50, 0.84), rgba(36, 40, 64, 0.74));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+.bg-glow {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 999px;
+  filter: blur(80px);
+  opacity: 0.5;
 }
 
-.privacy-card-safe {
-  border-color: rgba(80, 206, 161, 0.52);
-  background: linear-gradient(105deg, rgba(26, 37, 48, 0.88), rgba(62, 55, 116, 0.68));
+.bg-glow-blue {
+  background: radial-gradient(circle, rgba(37, 99, 255, 0.28), transparent 70%);
 }
 
-.privacy-card-never {
-  border-color: rgba(225, 72, 104, 0.45);
+.bg-glow-purple {
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.26), transparent 70%);
 }
 
-.privacy-section ul {
-  margin: 1.25rem 0;
-  padding-left: 1.85rem;
-  list-style: disc;
+/* Gentle, GPU-cheap drift on the hero's ambient glows. */
+.glow-drift {
+  animation: glow-drift 18s ease-in-out infinite alternate;
 }
 
-.privacy-section li + li {
-  margin-top: 0.65rem;
-}
-
-.privacy-section strong,
-.privacy-card strong {
-  color: #f8fafc;
-  font-weight: 800;
-}
-
-@media (max-width: 639px) {
-  .privacy-section ul {
-    padding-left: 1.35rem;
+@keyframes glow-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(2%, -3%, 0) scale(1.08);
   }
 }
 
-.dashboard-perspective {
-  transform: perspective(1400px) rotateX(7deg) rotateY(-12deg) rotateZ(1deg);
-  transform-origin: center;
-}
+/* ==========================================================
+   SCROLL REVEAL
+   Elements start hidden and are revealed by IntersectionObserver
+   (see useReveal). `.is-visible` is added once, never removed.
+   ========================================================== */
 
-.scroll-reveal {
+.reveal {
   opacity: 0;
-  transform: translateY(28px) scale(0.985);
+  transform: translateY(20px);
   transition:
-    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 220ms ease,
-    background-color 220ms ease;
+    opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform;
 }
 
-.scroll-reveal.is-visible {
+.reveal.is-visible {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: none;
+  will-change: auto;
 }
 
-.reveal {
-  animation: reveal 700ms ease both;
+/* ==========================================================
+   HERO TYPING CURSOR
+   ========================================================== */
+
+.type-caret {
+  display: inline-block;
+  width: 3px;
+  height: 0.92em;
+  margin-left: 0.06em;
+  border-radius: 2px;
+  background: var(--color-brand-violet);
+  vertical-align: text-bottom;
+  animation: caret-blink 1.05s steps(1, end) infinite;
 }
 
-@keyframes reveal {
+/* Solid while characters are still landing — a caret that blinks
+   mid-word reads as a glitch rather than as typing. It starts
+   blinking once the line finishes. */
+.type-caret--typing {
+  animation: none;
+  opacity: 1;
+}
+
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ==========================================================
+   PRODUCT MOCKUP MOTION
+   ========================================================== */
+
+.float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+}
+
+.float-slower {
+  animation: float-slow 9s ease-in-out infinite;
+  animation-delay: -2.5s;
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+/* Alert card sliding into the hero. */
+.alert-enter {
+  animation: alert-enter 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.alert-exit {
+  animation: alert-exit 380ms cubic-bezier(0.55, 0, 0.55, 0.2) both;
+}
+
+@keyframes alert-enter {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translate3d(0, 14px, 0) scale(0.96);
   }
-
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
+}
+
+@keyframes alert-exit {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0) scale(0.98);
+  }
+}
+
+/* Live dot on the alert card. */
+.ping-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.55;
+  animation: ping 1.9s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  75%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Pulse travelling along the discovery line in the metrics section. */
+.pulse-travel {
+  stroke-dasharray: 26 260;
+  animation: pulse-travel 3.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes pulse-travel {
+  from {
+    stroke-dashoffset: 286;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ==========================================================
+   HOW IT WORKS TIMELINE
+   The filled rail height is driven by --progress (0–1).
+   ========================================================== */
+
+.timeline-rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-tint-3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.timeline-fill {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: calc(var(--progress, 0) * 100%);
+  background: var(--brand-gradient);
+  border-radius: 2px;
+  transition: height 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ==========================================================
+   SCROLLERS
+   Horizontal, snap-scrolling card rows on small screens.
+   ========================================================== */
+
+.snap-row {
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.snap-row::-webkit-scrollbar {
+  display: none;
+}
+
+.snap-row > * {
+  scroll-snap-align: start;
+}
+
+/* ==========================================================
+   ACCORDION
+   Height animation via grid-template-rows — no JS measuring.
+   ========================================================== */
+
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition:
+    grid-template-rows 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 240ms ease;
+  opacity: 0;
+}
+
+.accordion-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.accordion-panel > div {
+  overflow: hidden;
+}
+
+/* ==========================================================
+   REDUCED MOTION
+   Everything decorative stops; nothing becomes unreadable.
+   ========================================================== */
+
+
+/* ==========================================================
+   UNIVERSITY MARQUEE
+   Two identical copies of the list; the track slides by exactly
+   one copy's width and restarts, so the loop is seamless.
+   ========================================================== */
+
+@keyframes marquee-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+.marquee-track {
+  animation: marquee-drift 70s linear infinite;
+  will-change: transform;
+}
+
+/* Let someone stop it to read a name. */
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -203,9 +568,27 @@ button {
     scroll-behavior: auto;
   }
 
-  .scroll-reveal {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .reveal {
     opacity: 1;
     transform: none;
-    transition: none;
+  }
+
+  .type-caret {
+    opacity: 1;
+  }
+
+  .float-slow,
+  .float-slower,
+  .glow-drift,
+  .marquee-track {
+    animation: none;
   }
 }
